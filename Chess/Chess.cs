@@ -172,6 +172,7 @@ namespace Chess
                 if (Chess.box[oldRow, oldColumn].ForeColor == Color.White)
                 {
                     Chess.box[row, column].ForeColor = Color.White;
+                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
                 else
                 {
@@ -206,7 +207,62 @@ namespace Chess
 
         private static void calcMovesKnight(int row, int column, Color foreColor)
         {
-            throw new NotImplementedException();
+            if (column >= 1 && row >= 2)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[row - 2, column - 1].ForeColor != Color.White)
+                    {
+                        Chess.box[row - 2, column - 1].BackColor = Color.Green;
+                    }
+                }
+                if (column <= 6)
+                {
+                    Chess.box[row - 2, column + 1].BackColor = Color.Green;
+                }
+            }
+            if (column >= 2 && row >= 1)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[row - 1, column - 2].ForeColor != Color.White)
+                    {
+                        Chess.box[row - 1, column - 2].BackColor = Color.Green;
+                    }
+                }
+                if (column <= 5)
+                {
+                    Chess.box[row - 1, column + 2].BackColor = Color.Green;
+                }
+            }
+            if (column >= 2 && row <= 6)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[row + 1, column - 2].ForeColor != Color.White)
+                    {
+                        Chess.box[row + 1, column - 2].BackColor = Color.Green;
+                    }
+                }
+                if (column <= 5)
+                {
+                    Chess.box[row + 1, column + 2].BackColor = Color.Green;
+                }
+            }
+            if (column >= 1 && row <= 5)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[row + 2, column - 1].ForeColor != Color.White)
+                    {
+                        Chess.box[row + 2, column - 1].BackColor = Color.Green;
+                    }
+                }
+                if (column <=6)
+                {
+                    Chess.box[row + 2, column + 1].BackColor = Color.Green;
+                }
+            }
         }
 
         /// <summary>
