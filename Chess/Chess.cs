@@ -200,8 +200,109 @@ namespace Chess
                     case "R":
                         calcMovesKnight(row, column);
                         break;
+                    case "B":
+                        calcMovesBischop(row, column);
+                        break;
                     default:
                         break;
+                }
+            }
+        }
+
+
+        private static void calcMovesBischop(int row, int column)
+        {
+            int newRow = row;
+            int newColumn = column;
+
+            while (newColumn != 0 && newRow != 0)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[newRow - 1, newColumn - 1].ForeColor != Color.White)
+                    {
+                        if (Chess.box[newRow - 1, newColumn - 1].ForeColor == Color.Black)
+                        {
+                            Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
+                        newRow = newRow - 1;
+                        newColumn = newColumn - 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            newRow = row;
+            newColumn = column;
+            while (newColumn != 7 && newRow != 0)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[newRow - 1, newColumn + 1].ForeColor != Color.White)
+                    {
+                        if (Chess.box[newRow - 1, newColumn + 1].ForeColor == Color.Black)
+                        {
+                            Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
+                        newRow = newRow - 1;
+                        newColumn = newColumn + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            newRow = row;
+            newColumn = column;
+            while (newColumn != 0 && newRow != 7)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[newRow + 1, newColumn - 1].ForeColor != Color.White)
+                    {
+                        if (Chess.box[newRow + 1, newColumn - 1].ForeColor == Color.Black)
+                        {
+                            Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
+                        newRow = newRow + 1;
+                        newColumn = newColumn - 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            newRow = row;
+            newColumn = column;
+            while (newColumn != 7 && newRow != 7)
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    if (Chess.box[newRow + 1, newColumn + 1].ForeColor != Color.White)
+                    {
+                        if (Chess.box[newRow + 1, newColumn + 1].ForeColor == Color.Black)
+                        {
+                            Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
+                        newRow = newRow + 1;
+                        newColumn = newColumn + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
