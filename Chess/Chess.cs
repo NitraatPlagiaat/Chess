@@ -177,6 +177,7 @@ namespace Chess
                 else
                 {
                     Chess.box[row, column].ForeColor = Color.Black;
+                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
 
                 clearPossibleMoves();
@@ -194,10 +195,10 @@ namespace Chess
                         calcMovesPawn(row, column, Chess.box[row, column].ForeColor);
                         break;
                     case "T":
-                        calcMovesTower(row, column, Chess.box[row, column].ForeColor);
+                        calcMovesTower(row, column);
                         break;
                     case "R":
-                        calcMovesKnight(row, column, Chess.box[row, column].ForeColor);
+                        calcMovesKnight(row, column);
                         break;
                     default:
                         break;
@@ -205,7 +206,69 @@ namespace Chess
             }
         }
 
-        private static void calcMovesKnight(int row, int column, Color foreColor)
+        /// <summary>
+        /// Calculate the possible moves for the knight
+        /// </summary>
+        /// <algo>
+        /// check if column is greater or equal to 1 and row is greater or equal to 2
+        /// if the selected piece forecolor is white ->
+        /// check if the box row - 2, column - 1 isn't white
+        /// if so make the backcolor of box row - 2, column - 1 green
+        /// -> else check if box row - 2, column - 1 forecolor isn't black
+        /// if so make the backcolor of box row - 2, column - 1 green
+        /// 
+        /// if column is smaller or equal to 6,
+        /// if the selected piece forecolor is white ->
+        /// check if the box row - 2, column + 1 isn't white
+        /// if so make the backcolor of box row - 2, column + 1 green
+        /// -> else check if box row - 2, column + 1 forecolor isn't black
+        /// if so make the backcolor of box row - 2, column + 1 green
+        /// 
+        /// check if column is greater or equal to 2 and row is greater or equal to 1
+        /// if the selected piece forecolor is white ->
+        /// check if the box row - 1, column - 2 isn't white
+        /// if so make the backcolor of box row - 1, column - 2 green
+        /// -> else check if box row - 1, column - 2 forecolor isn't black
+        /// if so make the backcolor of box row - 1, column - 2 green
+        /// 
+        /// if column is smaller or equal to 5,
+        /// if the selected piece forecolor is white ->
+        /// check if the box row - 1, column + 2 isn't white
+        /// if so make the backcolor of box row - 1, column + 2 green
+        /// -> else check if box row - 1, column + 2 forecolor isn't black
+        /// if so make the backcolor of box row - 1, column + 2 green
+        /// 
+        /// check if column is greater or equal to 2 and row is smaller or equal to 6
+        /// if the selected piece forecolor is white ->
+        /// check if the box row + 1, column - 2 isn't white
+        /// if so make the backcolor of box row + 1, column - 2 green
+        /// -> else check if box row + 1, column - 2 forecolor isn't black
+        /// if so make the backcolor of box row + 1, column - 2 green
+        /// 
+        /// if column is smaller or equal to 5,
+        /// if the selected piece forecolor is white ->
+        /// check if the box row + 1, column + 2 isn't white
+        /// if so make the backcolor of box row + 1, column + 2 green
+        /// -> else check if box row + 1, column + 2 forecolor isn't black
+        /// if so make the backcolor of box row + 1, column + 2 green
+        /// 
+        /// check if column is greater or equal to 1 and row is smaller or equal to 5
+        /// if the selected piece forecolor is white ->
+        /// check if the box row + 2, column - 1 isn't white
+        /// if so make the backcolor of box row + 2, column - 1 green
+        /// -> else check if box row + 2, column - 1 forecolor isn't black
+        /// if so make the backcolor of box row + 2, column - 1 green
+        /// 
+        /// if column is smaller or equal to 6,
+        /// if the selected piece forecolor is white ->
+        /// check if the box row + 2, column + 1 isn't white
+        /// if so make the backcolor of box row + 2, column + 1 green
+        /// -> else check if box row + 2, column + 1 forecolor isn't black
+        /// if so make the backcolor of box row + 2, column + 1 green
+        /// </algo>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        private static void calcMovesKnight(int row, int column)
         {
             if (column >= 1 && row >= 2)
             {
@@ -216,9 +279,29 @@ namespace Chess
                         Chess.box[row - 2, column - 1].BackColor = Color.Green;
                     }
                 }
+                else
+                {
+                    if (Chess.box[row - 2, column - 1].ForeColor != Color.Black)
+                    {
+                        Chess.box[row - 2, column - 1].BackColor = Color.Green;
+                    }
+                }
                 if (column <= 6)
                 {
-                    Chess.box[row - 2, column + 1].BackColor = Color.Green;
+                    if (Chess.box[row, column].ForeColor == Color.White)
+                    {
+                        if (Chess.box[row - 2, column + 1].ForeColor != Color.White)
+                        {
+                            Chess.box[row - 2, column + 1].BackColor = Color.Green;
+                        }
+                    }
+                    else
+                    {
+                        if (Chess.box[row - 2, column + 1].ForeColor != Color.Black)
+                        {
+                            Chess.box[row - 2, column + 1].BackColor = Color.Green;
+                        }
+                    }
                 }
             }
             if (column >= 2 && row >= 1)
@@ -230,9 +313,29 @@ namespace Chess
                         Chess.box[row - 1, column - 2].BackColor = Color.Green;
                     }
                 }
+                else
+                {
+                    if (Chess.box[row - 1, column - 2].ForeColor != Color.Black)
+                    {
+                        Chess.box[row - 1, column - 2].BackColor = Color.Green;
+                    }
+                }
                 if (column <= 5)
                 {
-                    Chess.box[row - 1, column + 2].BackColor = Color.Green;
+                    if (Chess.box[row, column].ForeColor == Color.White)
+                    {
+                        if (Chess.box[row - 1, column + 2].ForeColor != Color.White)
+                        {
+                            Chess.box[row - 1, column + 2].BackColor = Color.Green;
+                        }
+                    }
+                    else
+                    {
+                        if (Chess.box[row - 1, column + 2].ForeColor != Color.Black)
+                        {
+                            Chess.box[row - 1, column + 2].BackColor = Color.Green;
+                        }
+                    }
                 }
             }
             if (column >= 2 && row <= 6)
@@ -244,9 +347,29 @@ namespace Chess
                         Chess.box[row + 1, column - 2].BackColor = Color.Green;
                     }
                 }
+                else
+                {
+                    if (Chess.box[row + 1, column - 2].ForeColor != Color.Black)
+                    {
+                        Chess.box[row + 1, column - 2].BackColor = Color.Green;
+                    }
+                }
                 if (column <= 5)
                 {
-                    Chess.box[row + 1, column + 2].BackColor = Color.Green;
+                    if (Chess.box[row, column].ForeColor == Color.White)
+                    {
+                        if (Chess.box[row + 1, column + 2].ForeColor != Color.White)
+                        {
+                            Chess.box[row + 1, column + 2].BackColor = Color.Green;
+                        }
+                    }
+                    else
+                    {
+                        if (Chess.box[row + 1, column + 2].ForeColor != Color.Black)
+                        {
+                            Chess.box[row + 1, column + 2].BackColor = Color.Green;
+                        }
+                    }
                 }
             }
             if (column >= 1 && row <= 5)
@@ -258,9 +381,29 @@ namespace Chess
                         Chess.box[row + 2, column - 1].BackColor = Color.Green;
                     }
                 }
-                if (column <=6)
+                else
                 {
-                    Chess.box[row + 2, column + 1].BackColor = Color.Green;
+                    if (Chess.box[row + 2, column - 1].ForeColor != Color.Black)
+                    {
+                        Chess.box[row + 2, column - 1].BackColor = Color.Green;
+                    }
+                }
+                if (column <= 6)
+                {
+                    if (Chess.box[row, column].ForeColor == Color.White)
+                    {
+                        if (Chess.box[row + 2, column + 1].ForeColor != Color.White)
+                        {
+                            Chess.box[row + 2, column + 1].BackColor = Color.Green;
+                        }
+                    }
+                    else
+                    {
+                        if (Chess.box[row + 2, column + 1].ForeColor != Color.Black)
+                        {
+                            Chess.box[row + 2, column + 1].BackColor = Color.Green;
+                        }
+                    }
                 }
             }
         }
@@ -315,8 +458,7 @@ namespace Chess
         /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
-        /// <param name="foreColor"></param>
-        private static void calcMovesTower(int row, int column, Color foreColor)
+        private static void calcMovesTower(int row, int column)
         {
             int newRow = row;
             int newColumn = column;
@@ -373,7 +515,6 @@ namespace Chess
                     break;
                 }
             }
-            newRow = row;
             while (newColumn != 7)
             {
                 if (Chess.box[row, newColumn + 1].Text == "")
