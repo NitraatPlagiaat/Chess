@@ -193,15 +193,27 @@ namespace Chess
                 {
                     case "P":
                         calcMovesPawn(row, column, Chess.box[row, column].ForeColor);
+                        disableBoxes();
                         break;
                     case "T":
                         calcMovesTower(row, column);
+                        disableBoxes();
                         break;
                     case "R":
                         calcMovesKnight(row, column);
+                        disableBoxes();
                         break;
                     case "B":
                         calcMovesBischop(row, column);
+                        disableBoxes();
+                        break;
+                    case "Q":
+                        calcMovesBischop(row, column);
+                        calcMovesTower(row, column);
+                        disableBoxes();
+                        break;
+                    case "K":
+                        calcMovesKing(row, column);
                         break;
                     default:
                         break;
@@ -209,12 +221,22 @@ namespace Chess
             }
         }
 
+        private static void calcMovesKing(int row, int column)
+        {
+            throw new NotImplementedException();
+        }
 
+        /// <summary>
+        /// calculate the moves for the bischop
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
         private static void calcMovesBischop(int row, int column)
         {
             int newRow = row;
             int newColumn = column;
 
+            
             while (newColumn != 0 && newRow != 0)
             {
                 if (Chess.box[row, column].ForeColor == Color.White)
@@ -222,6 +244,24 @@ namespace Chess
                     if (Chess.box[newRow - 1, newColumn - 1].ForeColor != Color.White)
                     {
                         if (Chess.box[newRow - 1, newColumn - 1].ForeColor == Color.Black)
+                        {
+                            Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
+                        newRow = newRow - 1;
+                        newColumn = newColumn - 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    if (Chess.box[newRow - 1, newColumn - 1].ForeColor != Color.Black)
+                    {
+                        if (Chess.box[newRow - 1, newColumn - 1].ForeColor == Color.White)
                         {
                             Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
                             break;
@@ -258,6 +298,24 @@ namespace Chess
                         break;
                     }
                 }
+                else
+                {
+                    if (Chess.box[newRow - 1, newColumn + 1].ForeColor != Color.Black)
+                    {
+                        if (Chess.box[newRow - 1, newColumn + 1].ForeColor == Color.White)
+                        {
+                            Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
+                        newRow = newRow - 1;
+                        newColumn = newColumn + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             newRow = row;
             newColumn = column;
@@ -281,6 +339,24 @@ namespace Chess
                         break;
                     }
                 }
+                else
+                {
+                    if (Chess.box[newRow + 1, newColumn - 1].ForeColor != Color.Black)
+                    {
+                        if (Chess.box[newRow + 1, newColumn - 1].ForeColor == Color.White)
+                        {
+                            Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
+                        newRow = newRow + 1;
+                        newColumn = newColumn - 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             newRow = row;
             newColumn = column;
@@ -291,6 +367,24 @@ namespace Chess
                     if (Chess.box[newRow + 1, newColumn + 1].ForeColor != Color.White)
                     {
                         if (Chess.box[newRow + 1, newColumn + 1].ForeColor == Color.Black)
+                        {
+                            Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
+                            break;
+                        }
+                        Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
+                        newRow = newRow + 1;
+                        newColumn = newColumn + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    if (Chess.box[newRow + 1, newColumn + 1].ForeColor != Color.Black)
+                    {
+                        if (Chess.box[newRow + 1, newColumn + 1].ForeColor == Color.White)
                         {
                             Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
                             break;
@@ -669,7 +763,6 @@ namespace Chess
                     break;
                 }
             }
-            disableBoxes();
         }
 
         /// <summary>
@@ -753,7 +846,6 @@ namespace Chess
                     }
                 }
             }
-            disableBoxes();
         }
 
         /// <summary>
