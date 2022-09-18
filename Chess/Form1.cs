@@ -16,11 +16,64 @@ namespace Chess
         {
             InitializeComponent();
         }
+        private static bool gameStarted = false;
+        private static bool whiteTurn = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Chess.makeInterface(this);
             Chess.loadPlayingObjects();
+
+        }
+
+        private void btnTimeStop_Click(object sender, EventArgs e)
+        {
+            if (gameStarted == false)
+            {
+                gameStarted = true;
+                timer1.Start();
+            }
+
+            if (whiteTurn == false)
+            {
+                whiteTurn = true;
+            }
+            else
+            {
+                whiteTurn = false;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (whiteTurn == true)
+            {
+                int min = Int32.Parse(lblWhiteMin.Text);
+                int sec = Int32.Parse(lblWhiteSec.Text);
+
+                if (sec == 0)
+                {
+                    min--;
+                    sec = 60;
+                }
+                sec--;
+                lblWhiteMin.Text = min.ToString();
+                lblWhiteSec.Text = sec.ToString();
+            }
+            else
+            {
+                int min = Int32.Parse(lblBlackMin.Text);
+                int sec = Int32.Parse(lblBlackSec.Text);
+
+                if (sec == 0)
+                {
+                    min--;
+                    sec = 60;
+                }
+                sec--;
+                lblBlackMin.Text = min.ToString();
+                lblBlackSec.Text = sec.ToString();
+            }
         }
     }
 }
