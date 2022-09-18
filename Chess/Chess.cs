@@ -210,6 +210,7 @@ namespace Chess
                         break;
                     case "K":
                         calcMovesKing(row, column);
+                        disableBoxes();
                         break;
                     default:
                         break;

@@ -36,8 +36,8 @@ namespace Chess
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblBlackSec = new System.Windows.Forms.Label();
             this.lblWhiteSec = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnCheck = new System.Windows.Forms.Button();
+            this.btnCheckmate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnTimeStop
@@ -91,31 +91,32 @@ namespace Chess
             this.lblWhiteSec.TabIndex = 4;
             this.lblWhiteSec.Text = "00";
             // 
-            // button1
+            // btnCheck
             // 
-            this.button1.Location = new System.Drawing.Point(639, 193);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Check";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCheck.Location = new System.Drawing.Point(639, 193);
+            this.btnCheck.Name = "btnCheck";
+            this.btnCheck.Size = new System.Drawing.Size(75, 23);
+            this.btnCheck.TabIndex = 5;
+            this.btnCheck.Text = "Check";
+            this.btnCheck.UseVisualStyleBackColor = true;
+            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
-            // button2
+            // btnCheckmate
             // 
-            this.button2.Location = new System.Drawing.Point(639, 261);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Checkmate";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnCheckmate.Location = new System.Drawing.Point(639, 261);
+            this.btnCheckmate.Name = "btnCheckmate";
+            this.btnCheckmate.Size = new System.Drawing.Size(75, 23);
+            this.btnCheckmate.TabIndex = 6;
+            this.btnCheckmate.Text = "Checkmate";
+            this.btnCheckmate.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 475);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnCheckmate);
+            this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.lblWhiteSec);
             this.Controls.Add(this.lblBlackSec);
             this.Controls.Add(this.lblWhiteMin);
@@ -137,8 +138,8 @@ namespace Chess
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblBlackSec;
         private System.Windows.Forms.Label lblWhiteSec;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnCheck;
+        private System.Windows.Forms.Button btnCheckmate;
     }
 }
 

@@ -75,5 +75,35 @@ namespace Chess
                 lblBlackSec.Text = sec.ToString();
             }
         }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            if (whiteTurn == true)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (Chess.box[i, j].ForeColor == Color.Black && Chess.box[i, j].Text == "K")
+                        {
+                            Chess.box[i, j].BackColor = Color.Red;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (Chess.box[i, j].ForeColor == Color.White && Chess.box[i, j].Text == "K")
+                        {
+                            Chess.box[i, j].BackColor = Color.Red;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
