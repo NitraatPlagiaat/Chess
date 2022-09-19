@@ -8,14 +8,14 @@ namespace Chess
     {
         public static string[] pieces = new string[]
         {
-            "T",
-            "R",
-            "B",
+            "r",
+            "k",
+            "b",
             "Q",
             "K",
-            "B",
-            "R",
-            "T"
+            "b",
+            "k",
+            "r"
         };
     }
 
@@ -69,6 +69,7 @@ namespace Chess
                     box[r, c].BackColor = Color.Gray;
                     box[r, c].Row = r;
                     box[r, c].Column = c;
+                    box[r, c].Enabled = false;
                     board.Controls.Add(box[r, c]);
                 }
             }
@@ -98,11 +99,11 @@ namespace Chess
                             box[r, c].ForeColor = Color.Black;
                             break;
                         case 1:
-                            box[r, c].Text = "P";
+                            box[r, c].Text = "p";
                             box[r, c].ForeColor = Color.Black;
                             break;
                         case 6:
-                            box[r, c].Text = "P";
+                            box[r, c].Text = "p";
                             box[r, c].ForeColor = Color.White;
                             break;
                         case 7:
@@ -187,30 +188,30 @@ namespace Chess
                 buttonSelected = true;
                 switch (Chess.box[row, column].Text)
                 {
-                    case "P":
+                    case "p":
                         calcMovesPawn(row, column, Chess.box[row, column].ForeColor);
-                        disableBoxes();
+                        disableBoxes(false);
                         break;
-                    case "T":
+                    case "r":
                         calcMovesTower(row, column);
-                        disableBoxes();
+                        disableBoxes(false);
                         break;
-                    case "R":
+                    case "k":
                         calcMovesKnight(row, column);
-                        disableBoxes();
+                        disableBoxes(false);
                         break;
-                    case "B":
+                    case "b":
                         calcMovesBischop(row, column);
-                        disableBoxes();
+                        disableBoxes(false);
                         break;
                     case "Q":
                         calcMovesBischop(row, column);
                         calcMovesTower(row, column);
-                        disableBoxes();
+                        disableBoxes(false);
                         break;
                     case "K":
                         calcMovesKing(row, column);
-                        disableBoxes();
+                        disableBoxes(false);
                         break;
                     default:
                         break;
@@ -984,15 +985,22 @@ namespace Chess
         /// if the backcolor of the current box it's color is not green
         /// disable the current box
         /// </algo>
-        private static void disableBoxes()
+        public static void disableBoxes(bool fullyDisable)
         {
             for (int r = 0; r < Chess.boxes; r++)
             {
                 for (int c = 0; c < Chess.boxes; c++)
                 {
-                    if (Chess.box[r, c].BackColor != Color.Green)
+                    if (fullyDisable == true)
                     {
                         Chess.box[r, c].Enabled = false;
+                    }
+                    else
+                    {
+                        if (Chess.box[r, c].BackColor != Color.Green)
+                        {
+                            Chess.box[r, c].Enabled = false;
+                        }
                     }
                 }
             }
@@ -1022,6 +1030,20 @@ namespace Chess
                     {
                         Chess.box[r, c].Enabled = true;
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enable all boxes
+        /// </summary>
+        internal static void enableBoxes()
+        {
+            for (int r = 0; r < Chess.boxes; r++)
+            {
+                for (int c = 0; c < Chess.boxes; c++)
+                {
+                    Chess.box[r, c].Enabled = true;
                 }
             }
         }

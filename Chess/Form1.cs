@@ -31,6 +31,7 @@ namespace Chess
             if (gameStarted == false)
             {
                 gameStarted = true;
+                Functions.enableBoxes();
                 timer1.Start();
             }
 
@@ -104,6 +105,12 @@ namespace Chess
                     }
                 }
             }
+        }
+
+        private void btnCheckmate_Click(object sender, EventArgs e)
+        {
+            Functions.disableBoxes(true);
+            timer1.Stop();
         }
     }
 }

@@ -109,6 +109,7 @@ namespace Chess
             this.btnCheckmate.TabIndex = 6;
             this.btnCheckmate.Text = "Checkmate";
             this.btnCheckmate.UseVisualStyleBackColor = true;
+            this.btnCheckmate.Click += new System.EventHandler(this.btnCheckmate_Click);
             // 
             // Form1
             // 
@@ -123,7 +124,7 @@ namespace Chess
             this.Controls.Add(this.lblBlackMin);
             this.Controls.Add(this.btnTimeStop);
             this.Name = "Form1";
-            this.Text = "Chess";
+            this.Text = "Chess (ALPHA)";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
