@@ -23,28 +23,48 @@ namespace Chess
         {
             Chess.makeInterface(this);
             Chess.loadPlayingObjects();
-
         }
 
+        /// <summary>
+        /// Start the timer and switch players timers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTimeStop_Click(object sender, EventArgs e)
         {
             if (gameStarted == false)
             {
                 gameStarted = true;
+                whiteTurn = true;
                 Functions.enableBoxes();
                 timer1.Start();
             }
-
-            if (whiteTurn == false)
-            {
-                whiteTurn = true;
-            }
             else
             {
-                whiteTurn = false;
+                if (whiteTurn == false)
+                {
+                    for (int i = 0; i < Functions.selected.Length; i++)
+                    {
+                        lbBlack.Items.Add(Functions.selected[i]);
+                    }
+                    whiteTurn = true;
+                }
+                else
+                {
+                    for (int i = 0; i < Functions.selected.Length; i++)
+                    {
+                        lbWhite.Items.Add(Functions.selected[i]);
+                    }
+                    whiteTurn = false;
+                }
             }
         }
 
+        /// <summary>
+        /// count down to 0
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (whiteTurn == true)
@@ -77,6 +97,11 @@ namespace Chess
             }
         }
 
+        /// <summary>
+        /// Declare the oponent check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCheck_Click(object sender, EventArgs e)
         {
             if (whiteTurn == true)
@@ -107,6 +132,11 @@ namespace Chess
             }
         }
 
+        /// <summary>
+        /// Declare the oponent checkmate
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCheckmate_Click(object sender, EventArgs e)
         {
             Functions.disableBoxes(true);

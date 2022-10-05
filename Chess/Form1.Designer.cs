@@ -38,6 +38,8 @@ namespace Chess
             this.lblWhiteSec = new System.Windows.Forms.Label();
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnCheckmate = new System.Windows.Forms.Button();
+            this.lbBlack = new System.Windows.Forms.ListBox();
+            this.lbWhite = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // btnTimeStop
@@ -111,11 +113,29 @@ namespace Chess
             this.btnCheckmate.UseVisualStyleBackColor = true;
             this.btnCheckmate.Click += new System.EventHandler(this.btnCheckmate_Click);
             // 
+            // lbBlack
+            // 
+            this.lbBlack.FormattingEnabled = true;
+            this.lbBlack.Location = new System.Drawing.Point(555, 17);
+            this.lbBlack.Name = "lbBlack";
+            this.lbBlack.Size = new System.Drawing.Size(120, 160);
+            this.lbBlack.TabIndex = 7;
+            // 
+            // lbWhite
+            // 
+            this.lbWhite.FormattingEnabled = true;
+            this.lbWhite.Location = new System.Drawing.Point(555, 303);
+            this.lbWhite.Name = "lbWhite";
+            this.lbWhite.Size = new System.Drawing.Size(120, 160);
+            this.lbWhite.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 475);
+            this.Controls.Add(this.lbWhite);
+            this.Controls.Add(this.lbBlack);
             this.Controls.Add(this.btnCheckmate);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.lblWhiteSec);
@@ -141,6 +161,8 @@ namespace Chess
         private System.Windows.Forms.Label lblWhiteSec;
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Button btnCheckmate;
+        private System.Windows.Forms.ListBox lbBlack;
+        private System.Windows.Forms.ListBox lbWhite;
     }
 }
 

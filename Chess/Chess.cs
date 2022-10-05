@@ -122,6 +122,7 @@ namespace Chess
     {
         public static int[] selected = new int[2];
         public static bool buttonSelected = false;
+        public static int[] moves = new int[4];
 
         /// <summary>
         /// Calculate possible movements per chesspiece
@@ -222,6 +223,12 @@ namespace Chess
         /// <summary>
         /// calc the moves for the king
         /// </summary>
+        /// <algo>
+        /// Check from each side if they are on the edge
+        /// for top and bottom sides the edge is at row 0 and 7,
+        /// for left and right sides the edge is at column 0 and 7
+        /// if the
+        /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
         private static void calcMovesKing(int row, int column)
