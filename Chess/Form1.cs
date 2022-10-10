@@ -21,7 +21,7 @@ namespace Chess
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Chess.makeInterface(this);
+            Chess.makeInterface(chessPanel);
             Chess.loadPlayingObjects();
         }
 
@@ -43,18 +43,14 @@ namespace Chess
             {
                 if (whiteTurn == false)
                 {
-                    for (int i = 0; i < Functions.selected.Length; i++)
-                    {
-                        lbBlack.Items.Add(Functions.selected[i]);
-                    }
+                    string move = Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
+                    lbBlack.Items.Add(move);
                     whiteTurn = true;
                 }
                 else
                 {
-                    for (int i = 0; i < Functions.selected.Length; i++)
-                    {
-                        lbWhite.Items.Add(Functions.selected[i]);
-                    }
+                    string move = Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
+                    lbWhite.Items.Add(move);
                     whiteTurn = false;
                 }
             }
@@ -141,6 +137,17 @@ namespace Chess
         {
             Functions.disableBoxes(true);
             timer1.Stop();
+        }
+
+        /// <summary>
+        /// Start a new game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNewGame_Click(object sender, EventArgs e)
+        {
+            Chess.loadPlayingObjects();
+            Chess.cleanPlayingObjects();
         }
     }
 }

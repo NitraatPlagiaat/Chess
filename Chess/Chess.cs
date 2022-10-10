@@ -53,10 +53,10 @@ namespace Chess
         /// add the boxes to the controls of board
         /// </algo>
         /// <param name="board"></param>
-        internal static void makeInterface(Control board)
+        internal static void makeInterface(Panel board)
         {
             box = new ChessButton[boxes, boxes];
-            int h = board.ClientSize.Height;
+            int h = board.Height;
             int w = h;
             for (int r = 0; r < boxes; r++)
             {
@@ -116,13 +116,32 @@ namespace Chess
                 }
             }
         }
+
+        /// <summary>
+        /// Clean the remaining playing objects used in the last game
+        /// </summary>
+        /// 
+        internal static void cleanPlayingObjects()
+        {
+            for (int r = 2; r < 6; r++)
+            {
+                for (int c = 0; c < boxes; c++)
+                {
+                    if (box[r, c].Text != "")
+                    {
+                        box[r, c].Text = "";
+                        box[r, c].ForeColor = Color.Transparent;
+                    }
+                }
+            }
+            Functions.disableBoxes(true);
+        }
     }
 
     class Functions
     {
-        public static int[] selected = new int[2];
         public static bool buttonSelected = false;
-        public static int[] moves = new int[4];
+        public static int[] move = new int[4];
 
         /// <summary>
         /// Calculate possible movements per chesspiece
@@ -131,7 +150,7 @@ namespace Chess
         /// get row number and column number from the box
         /// 
         /// if the button is already selected
-        /// make new integers oldRow and oldColumn and fil them with the numbers from selected array
+        /// make new integers oldRow and oldColumn and fil them with the first two numbers from move array
         /// make the text of the current clicked box the same text as the previous clicked box
         /// make the previous clicked box it's text blank
         /// 
@@ -144,12 +163,11 @@ namespace Chess
         /// set buttonSelected to false
         /// 
         /// else
-        /// fill selected[0] with row
-        /// fill selected[1] with column
+        /// fill move[0] with row
+        /// fill move[1] with column
         /// set buttonSelect to true
         /// 
-        /// in case the pawn is clicked, calculate the possible movements for the pawn,
-        /// in case the tower is clicked, calculate the possible moveemnts for the tower
+        /// Calculate the moves for a specific gamepiece if it's clicked.
         /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -161,8 +179,10 @@ namespace Chess
 
             if (buttonSelected == true)
             {
-                int oldRow = selected[0];
-                int oldColumn = selected[1];
+                int oldRow = move[0];
+                int oldColumn = move[1];
+                move[2] = row;
+                move[3] = column;
 
                 Chess.box[row, column].Text = Chess.box[oldRow, oldColumn].Text;
                 Chess.box[oldRow, oldColumn].Text = "";
@@ -184,17 +204,17 @@ namespace Chess
             }
             else
             {
-                selected[0] = row;
-                selected[1] = column;
+                move[0] = row;
+                move[1] = column;
                 buttonSelected = true;
                 switch (Chess.box[row, column].Text)
                 {
                     case "p":
-                        calcMovesPawn(row, column, Chess.box[row, column].ForeColor);
+                        calcMovesPawn(row, column);
                         disableBoxes(false);
                         break;
                     case "r":
-                        calcMovesTower(row, column);
+                        calcMovesTower(row, column, Chess.box[row, column].ForeColor);
                         disableBoxes(false);
                         break;
                     case "k":
@@ -207,7 +227,7 @@ namespace Chess
                         break;
                     case "Q":
                         calcMovesBischop(row, column);
-                        calcMovesTower(row, column);
+                        calcMovesTower(row, column, Chess.box[row, column].ForeColor);
                         disableBoxes(false);
                         break;
                     case "K":
@@ -227,7 +247,12 @@ namespace Chess
         /// Check from each side if they are on the edge
         /// for top and bottom sides the edge is at row 0 and 7,
         /// for left and right sides the edge is at column 0 and 7
-        /// if the
+        /// if the rows and columns do not equal to 7 or 0,
+        /// it means that the king can be moved to that position
+        /// and set sides[index] to true
+        /// if side[index] is true, it means that not only
+        /// the king can move up and down, but potentially also can diagonal
+        /// if two other indexes connecting to the corresponding index are true too.
         /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
@@ -371,7 +396,6 @@ namespace Chess
             int newRow = row;
             int newColumn = column;
 
-            
             while (newColumn != 0 && newRow != 0)
             {
                 if (Chess.box[row, column].ForeColor == Color.White)
@@ -788,7 +812,7 @@ namespace Chess
         /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
-        private static void calcMovesTower(int row, int column)
+        private static void calcMovesTower(int row, int column, Color foreColor)
         {
             int newRow = row;
             int newColumn = column;
@@ -801,19 +825,9 @@ namespace Chess
                 }
                 else
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[newRow - 1, column].ForeColor != foreColor)
                     {
-                        if (Chess.box[newRow - 1, column].ForeColor == Color.Black)
-                        {
-                            Chess.box[newRow - 1, column].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[newRow - 1, column].ForeColor == Color.White)
-                        {
-                            Chess.box[newRow - 1, column].BackColor = Color.Green;
-                        }
+                        Chess.box[newRow - 1, column].BackColor = Color.Green;
                     }
                     break;
                 }
@@ -828,19 +842,9 @@ namespace Chess
                 }
                 else
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[newRow + 1, column].ForeColor != foreColor)
                     {
-                        if (Chess.box[newRow + 1, column].ForeColor == Color.Black)
-                        {
-                            Chess.box[newRow + 1, column].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[newRow + 1, column].ForeColor == Color.White)
-                        {
-                            Chess.box[newRow + 1, column].BackColor = Color.Green;
-                        }
+                        Chess.box[newRow + 1, column].BackColor = Color.Green;
                     }
                     break;
                 }
@@ -854,19 +858,9 @@ namespace Chess
                 }
                 else
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[row, newColumn + 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[row, newColumn + 1].ForeColor == Color.Black)
-                        {
-                            Chess.box[row, newColumn + 1].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[row, newColumn + 1].ForeColor == Color.White)
-                        {
-                            Chess.box[row, newColumn + 1].BackColor = Color.Green;
-                        }
+                        Chess.box[newRow, newColumn + 1].BackColor = Color.Green;
                     }
                     break;
                 }
@@ -881,19 +875,9 @@ namespace Chess
                 }
                 else
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[row, newColumn - 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[row, newColumn - 1].ForeColor == Color.Black)
-                        {
-                            Chess.box[row, newColumn - 1].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[row, newColumn - 1].ForeColor == Color.White)
-                        {
-                            Chess.box[row, newColumn - 1].BackColor = Color.Green;
-                        }
+                        Chess.box[row, newColumn - 1].BackColor = Color.Green;
                     }
                     break;
                 }
@@ -922,10 +906,10 @@ namespace Chess
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <param name="foreColor"></param>
-        private static void calcMovesPawn(int row, int column, Color foreColor)
+        private static void calcMovesPawn(int row, int column)
         {
             int newRow = row;
-            if (foreColor == Color.White)
+            if (Chess.box[row, column].ForeColor == Color.White)
             {
                 for (int i = 0; i < 2; i++)
                 {
@@ -984,7 +968,7 @@ namespace Chess
         }
 
         /// <summary>
-        /// Disable every box that is not green colored
+        /// Disable every box which is not green if the bool parameter is false.
         /// </summary>
         /// <algo>
         /// loop over each row
@@ -1044,6 +1028,11 @@ namespace Chess
         /// <summary>
         /// Enable all boxes
         /// </summary>
+        /// <algo>
+        /// loop over the rows
+        /// loop over the columns
+        /// enable the box on r and c
+        /// </algo>
         internal static void enableBoxes()
         {
             for (int r = 0; r < Chess.boxes; r++)
