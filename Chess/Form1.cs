@@ -100,29 +100,13 @@ namespace Chess
         /// <param name="e"></param>
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            if (whiteTurn == true)
+            for (int r = 0; r < 8; r++)
             {
-                for (int i = 0; i < 8; i++)
+                for (int c = 0; c < 8; c++)
                 {
-                    for (int j = 0; j < 8; j++)
+                    if (Chess.box[r, c].ForeColor != Functions.color && Chess.box[r, c].Text == "K")
                     {
-                        if (Chess.box[i, j].ForeColor == Color.Black && Chess.box[i, j].Text == "K")
-                        {
-                            Chess.box[i, j].BackColor = Color.Red;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 8; i++)
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (Chess.box[i, j].ForeColor == Color.White && Chess.box[i, j].Text == "K")
-                        {
-                            Chess.box[i, j].BackColor = Color.Red;
-                        }
+                        Chess.box[r, c].BackColor = Color.Red;
                     }
                 }
             }
@@ -148,6 +132,35 @@ namespace Chess
         {
             Chess.loadPlayingObjects();
             Chess.cleanPlayingObjects();
+        }
+
+        /// <summary>
+        /// End the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void endCurrentGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Functions.disableBoxes(true);
+            timer1.Stop();
+        }
+
+        private void gamepiecesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("p = pawn \n\rr = rook \n\rk = knight \n\rb = bischop \n\rQ = queen \n\rK = king");
+        }
+
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Use the 'Time' button to start the game if not started and press it during the game after every move you make.\n\r" +
+                "If you checked the oponent, press the 'Check' button\n\r" +
+                "If you made your oponent checkmate, press the 'Checkmate' button");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Chess ALPHA V2\n\r" +
+                "Developed by Yirnick van Dijk");
         }
     }
 }

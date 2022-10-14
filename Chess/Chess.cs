@@ -110,8 +110,6 @@ namespace Chess
                             box[r, c].Text = ChessPieces.pieces[c];
                             box[r, c].ForeColor = Color.White;
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -120,7 +118,6 @@ namespace Chess
         /// <summary>
         /// Clean the remaining playing objects used in the last game
         /// </summary>
-        /// 
         internal static void cleanPlayingObjects()
         {
             for (int r = 2; r < 6; r++)
@@ -142,6 +139,7 @@ namespace Chess
     {
         public static bool buttonSelected = false;
         public static int[] move = new int[4];
+        public static Color color = Color.Transparent;
 
         /// <summary>
         /// Calculate possible movements per chesspiece
@@ -207,6 +205,7 @@ namespace Chess
                 move[0] = row;
                 move[1] = column;
                 buttonSelected = true;
+                color = Chess.box[row, column].ForeColor;
                 switch (Chess.box[row, column].Text)
                 {
                     case "p":
@@ -218,20 +217,20 @@ namespace Chess
                         disableBoxes(false);
                         break;
                     case "k":
-                        calcMovesKnight(row, column);
+                        calcMovesKnight(row, column, Chess.box[row, column].ForeColor);
                         disableBoxes(false);
                         break;
                     case "b":
-                        calcMovesBischop(row, column);
+                        calcMovesBischop(row, column, Chess.box[row, column].ForeColor);
                         disableBoxes(false);
                         break;
                     case "Q":
-                        calcMovesBischop(row, column);
+                        calcMovesBischop(row, column, Chess.box[row, column].ForeColor);
                         calcMovesTower(row, column, Chess.box[row, column].ForeColor);
                         disableBoxes(false);
                         break;
                     case "K":
-                        calcMovesKing(row, column);
+                        calcMovesKing(row, column, Chess.box[row, column].ForeColor);
                         disableBoxes(false);
                         break;
                     default:
@@ -256,131 +255,65 @@ namespace Chess
         /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
-        private static void calcMovesKing(int row, int column)
+        private static void calcMovesKing(int row, int column, Color foreColor)
         {
-            if (Chess.box[row, column].ForeColor == Color.White)
+            bool[] sides = new bool[] { false, false, false, false };
+            if (row != 0)
             {
-                bool[] sides = new bool[] { false, false, false, false };
-                if (row != 0)
+                if (Chess.box[row - 1, column].ForeColor != foreColor)
                 {
-                    if (Chess.box[row - 1, column].ForeColor != Color.White)
-                    {
-                        Chess.box[row - 1, column].BackColor = Color.Green;
-                    }
-                    sides[0] = true;
+                    Chess.box[row - 1, column].BackColor = Color.Green;
                 }
-                if (column != 7)
-                {
-                    if (Chess.box[row, column + 1].ForeColor != Color.White)
-                    {
-                        Chess.box[row, column + 1].BackColor = Color.Green;
-                    }
-                    if (sides[0] == true)
-                    {
-                        if (Chess.box[row - 1, column + 1].ForeColor != Color.White)
-                        {
-                            Chess.box[row - 1, column + 1].BackColor = Color.Green;
-                        }
-                    }
-                    sides[1] = true;
-                }
-                if (row != 7)
-                {
-                    if (Chess.box[row + 1, column].ForeColor != Color.White)
-                    {
-                        Chess.box[row + 1, column].BackColor = Color.Green;
-                    }
-                    if (sides[1] == true)
-                    {
-                        if (Chess.box[row + 1, column + 1].ForeColor != Color.White)
-                        {
-                            Chess.box[row + 1, column + 1].BackColor = Color.Green;
-                        }
-                    }
-                    sides[2] = true;
-                }
-                if (column != 0)
-                {
-                    if (Chess.box[row, column - 1].ForeColor != Color.White)
-                    {
-                        Chess.box[row, column - 1].BackColor = Color.Green;
-                    }
-                    if (sides[2] == true)
-                    {
-                        if (Chess.box[row + 1, column - 1].ForeColor != Color.White)
-                        {
-                            Chess.box[row + 1, column - 1].BackColor = Color.Green;
-                        }
-                    }
-                    if (sides[0] == true)
-                    {
-                        if (Chess.box[row - 1, column - 1].ForeColor != Color.White)
-                        {
-                            Chess.box[row - 1, column - 1].BackColor = Color.Green;
-                        }
-                    }
-                }
+                sides[0] = true;
             }
-            else
+            if (column != 7)
             {
-                bool[] sides = new bool[] { false, false, false, false };
-                if (row != 0)
+                if (Chess.box[row, column + 1].ForeColor != foreColor)
                 {
-                    if (Chess.box[row - 1, column].ForeColor != Color.Black)
-                    {
-                        Chess.box[row - 1, column].BackColor = Color.Green;
-                    }
-                    sides[0] = true;
+                    Chess.box[row, column + 1].BackColor = Color.Green;
                 }
-                if (column != 7)
+                if (sides[0] == true)
                 {
-                    if (Chess.box[row, column + 1].ForeColor != Color.Black)
+                    if (Chess.box[row - 1, column + 1].ForeColor != foreColor)
                     {
-                        Chess.box[row, column + 1].BackColor = Color.Green;
+                        Chess.box[row - 1, column + 1].BackColor = Color.Green;
                     }
-                    if (sides[0] == true)
-                    {
-                        if (Chess.box[row - 1, column + 1].ForeColor != Color.Black)
-                        {
-                            Chess.box[row - 1, column + 1].BackColor = Color.Green;
-                        }
-                    }
-                    sides[1] = true;
                 }
-                if (row != 7)
+                sides[1] = true;
+            }
+            if (row != 7)
+            {
+                if (Chess.box[row + 1, column].ForeColor != foreColor)
                 {
-                    if (Chess.box[row + 1, column].ForeColor != Color.Black)
-                    {
-                        Chess.box[row + 1, column].BackColor = Color.Green;
-                    }
-                    if (sides[1] == true)
-                    {
-                        if (Chess.box[row + 1, column + 1].ForeColor != Color.Black)
-                        {
-                            Chess.box[row + 1, column + 1].BackColor = Color.Green;
-                        }
-                    }
-                    sides[2] = true;
+                    Chess.box[row + 1, column].BackColor = Color.Green;
                 }
-                if (column != 0)
+                if (sides[1] == true)
                 {
-                    if (Chess.box[row, column - 1].ForeColor != Color.Black)
+                    if (Chess.box[row + 1, column + 1].ForeColor != foreColor)
                     {
-                        Chess.box[row, column - 1].BackColor = Color.Green;
+                        Chess.box[row + 1, column + 1].BackColor = Color.Green;
                     }
-                    if (sides[2] == true)
+                }
+                sides[2] = true;
+            }
+            if (column != 0)
+            {
+                if (Chess.box[row, column - 1].ForeColor != foreColor)
+                {
+                    Chess.box[row, column - 1].BackColor = Color.Green;
+                }
+                if (sides[2] == true)
+                {
+                    if (Chess.box[row + 1, column - 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[row + 1, column - 1].ForeColor != Color.Black)
-                        {
-                            Chess.box[row + 1, column - 1].BackColor = Color.Green;
-                        }
+                        Chess.box[row + 1, column - 1].BackColor = Color.Green;
                     }
-                    if (sides[0] == true)
+                }
+                if (sides[0] == true)
+                {
+                    if (Chess.box[row - 1, column - 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[row - 1, column - 1].ForeColor != Color.Black)
-                        {
-                            Chess.box[row - 1, column - 1].BackColor = Color.Green;
-                        }
+                        Chess.box[row - 1, column - 1].BackColor = Color.Green;
                     }
                 }
             }
@@ -391,171 +324,83 @@ namespace Chess
         /// </summary>
         /// <param name="row"></param>
         /// <param name="column"></param>
-        private static void calcMovesBischop(int row, int column)
+        private static void calcMovesBischop(int row, int column, Color foreColor)
         {
             int newRow = row;
             int newColumn = column;
 
             while (newColumn != 0 && newRow != 0)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[newRow - 1, newColumn - 1].Text == "")
                 {
-                    if (Chess.box[newRow - 1, newColumn - 1].ForeColor != Color.White)
-                    {
-                        if (Chess.box[newRow - 1, newColumn - 1].ForeColor == Color.Black)
-                        {
-                            Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
-                            break;
-                        }
-                        Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
-                        newRow = newRow - 1;
-                        newColumn = newColumn - 1;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
+                    newRow = newRow - 1;
+                    newColumn = newColumn - 1;
                 }
                 else
                 {
-                    if (Chess.box[newRow - 1, newColumn - 1].ForeColor != Color.Black)
+                    if (Chess.box[newRow - 1, newColumn - 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[newRow - 1, newColumn - 1].ForeColor == Color.White)
-                        {
-                            Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
-                            break;
-                        }
                         Chess.box[newRow - 1, newColumn - 1].BackColor = Color.Green;
-                        newRow = newRow - 1;
-                        newColumn = newColumn - 1;
                     }
-                    else
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
             newRow = row;
             newColumn = column;
             while (newColumn != 7 && newRow != 0)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[newRow - 1, newColumn + 1].Text == "")
                 {
-                    if (Chess.box[newRow - 1, newColumn + 1].ForeColor != Color.White)
-                    {
-                        if (Chess.box[newRow - 1, newColumn + 1].ForeColor == Color.Black)
-                        {
-                            Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
-                            break;
-                        }
-                        Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
-                        newRow = newRow - 1;
-                        newColumn = newColumn + 1;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
+                    newRow = newRow - 1;
+                    newColumn = newColumn + 1;
                 }
                 else
                 {
-                    if (Chess.box[newRow - 1, newColumn + 1].ForeColor != Color.Black)
+                    if (Chess.box[newRow - 1, newColumn + 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[newRow - 1, newColumn + 1].ForeColor == Color.White)
-                        {
-                            Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
-                            break;
-                        }
                         Chess.box[newRow - 1, newColumn + 1].BackColor = Color.Green;
-                        newRow = newRow - 1;
-                        newColumn = newColumn + 1;
                     }
-                    else
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
             newRow = row;
             newColumn = column;
             while (newColumn != 0 && newRow != 7)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[newRow + 1, newColumn - 1].Text == "")
                 {
-                    if (Chess.box[newRow + 1, newColumn - 1].ForeColor != Color.White)
-                    {
-                        if (Chess.box[newRow + 1, newColumn - 1].ForeColor == Color.Black)
-                        {
-                            Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
-                            break;
-                        }
-                        Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
-                        newRow = newRow + 1;
-                        newColumn = newColumn - 1;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
+                    newRow = newRow + 1;
+                    newColumn = newColumn - 1;
                 }
                 else
                 {
-                    if (Chess.box[newRow + 1, newColumn - 1].ForeColor != Color.Black)
+                    if (Chess.box[newRow + 1, newColumn - 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[newRow + 1, newColumn - 1].ForeColor == Color.White)
-                        {
-                            Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
-                            break;
-                        }
                         Chess.box[newRow + 1, newColumn - 1].BackColor = Color.Green;
-                        newRow = newRow + 1;
-                        newColumn = newColumn - 1;
                     }
-                    else
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
             newRow = row;
             newColumn = column;
             while (newColumn != 7 && newRow != 7)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[newRow + 1, newColumn + 1].Text == "")
                 {
-                    if (Chess.box[newRow + 1, newColumn + 1].ForeColor != Color.White)
-                    {
-                        if (Chess.box[newRow + 1, newColumn + 1].ForeColor == Color.Black)
-                        {
-                            Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
-                            break;
-                        }
-                        Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
-                        newRow = newRow + 1;
-                        newColumn = newColumn + 1;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
+                    newRow = newRow + 1;
+                    newColumn = newColumn + 1;
                 }
                 else
                 {
-                    if (Chess.box[newRow + 1, newColumn + 1].ForeColor != Color.Black)
+                    if (Chess.box[newRow + 1, newColumn + 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[newRow + 1, newColumn + 1].ForeColor == Color.White)
-                        {
-                            Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
-                            break;
-                        }
                         Chess.box[newRow + 1, newColumn + 1].BackColor = Color.Green;
-                        newRow = newRow + 1;
-                        newColumn = newColumn + 1;
                     }
-                    else
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }
@@ -622,141 +467,61 @@ namespace Chess
         /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
-        private static void calcMovesKnight(int row, int column)
+        private static void calcMovesKnight(int row, int column, Color foreColor)
         {
             if (column >= 1 && row >= 2)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[row - 2, column - 1].ForeColor != foreColor)
                 {
-                    if (Chess.box[row - 2, column - 1].ForeColor != Color.White)
-                    {
-                        Chess.box[row - 2, column - 1].BackColor = Color.Green;
-                    }
-                }
-                else
-                {
-                    if (Chess.box[row - 2, column - 1].ForeColor != Color.Black)
-                    {
-                        Chess.box[row - 2, column - 1].BackColor = Color.Green;
-                    }
+                    Chess.box[row - 2, column - 1].BackColor = Color.Green;
                 }
                 if (column <= 6)
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[row - 2, column + 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[row - 2, column + 1].ForeColor != Color.White)
-                        {
-                            Chess.box[row - 2, column + 1].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[row - 2, column + 1].ForeColor != Color.Black)
-                        {
-                            Chess.box[row - 2, column + 1].BackColor = Color.Green;
-                        }
+                        Chess.box[row - 2, column + 1].BackColor = Color.Green;
                     }
                 }
             }
             if (column >= 2 && row >= 1)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[row - 1, column - 2].ForeColor != foreColor)
                 {
-                    if (Chess.box[row - 1, column - 2].ForeColor != Color.White)
-                    {
-                        Chess.box[row - 1, column - 2].BackColor = Color.Green;
-                    }
-                }
-                else
-                {
-                    if (Chess.box[row - 1, column - 2].ForeColor != Color.Black)
-                    {
-                        Chess.box[row - 1, column - 2].BackColor = Color.Green;
-                    }
+                    Chess.box[row - 1, column - 2].BackColor = Color.Green;
                 }
                 if (column <= 5)
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[row - 1, column + 2].ForeColor != foreColor)
                     {
-                        if (Chess.box[row - 1, column + 2].ForeColor != Color.White)
-                        {
-                            Chess.box[row - 1, column + 2].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[row - 1, column + 2].ForeColor != Color.Black)
-                        {
-                            Chess.box[row - 1, column + 2].BackColor = Color.Green;
-                        }
+                        Chess.box[row - 1, column + 2].BackColor = Color.Green;
                     }
                 }
             }
             if (column >= 2 && row <= 6)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[row + 1, column - 2].ForeColor != foreColor)
                 {
-                    if (Chess.box[row + 1, column - 2].ForeColor != Color.White)
-                    {
-                        Chess.box[row + 1, column - 2].BackColor = Color.Green;
-                    }
-                }
-                else
-                {
-                    if (Chess.box[row + 1, column - 2].ForeColor != Color.Black)
-                    {
-                        Chess.box[row + 1, column - 2].BackColor = Color.Green;
-                    }
+                    Chess.box[row + 1, column - 2].BackColor = Color.Green;
                 }
                 if (column <= 5)
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[row + 1, column + 2].ForeColor != foreColor)
                     {
-                        if (Chess.box[row + 1, column + 2].ForeColor != Color.White)
-                        {
-                            Chess.box[row + 1, column + 2].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[row + 1, column + 2].ForeColor != Color.Black)
-                        {
-                            Chess.box[row + 1, column + 2].BackColor = Color.Green;
-                        }
+                        Chess.box[row + 1, column + 2].BackColor = Color.Green;
                     }
                 }
             }
             if (column >= 1 && row <= 5)
             {
-                if (Chess.box[row, column].ForeColor == Color.White)
+                if (Chess.box[row + 2, column - 1].ForeColor != foreColor)
                 {
-                    if (Chess.box[row + 2, column - 1].ForeColor != Color.White)
-                    {
-                        Chess.box[row + 2, column - 1].BackColor = Color.Green;
-                    }
-                }
-                else
-                {
-                    if (Chess.box[row + 2, column - 1].ForeColor != Color.Black)
-                    {
-                        Chess.box[row + 2, column - 1].BackColor = Color.Green;
-                    }
+                    Chess.box[row + 2, column - 1].BackColor = Color.Green;
                 }
                 if (column <= 6)
                 {
-                    if (Chess.box[row, column].ForeColor == Color.White)
+                    if (Chess.box[row + 2, column + 1].ForeColor != foreColor)
                     {
-                        if (Chess.box[row + 2, column + 1].ForeColor != Color.White)
-                        {
-                            Chess.box[row + 2, column + 1].BackColor = Color.Green;
-                        }
-                    }
-                    else
-                    {
-                        if (Chess.box[row + 2, column + 1].ForeColor != Color.Black)
-                        {
-                            Chess.box[row + 2, column + 1].BackColor = Color.Green;
-                        }
+                        Chess.box[row + 2, column + 1].BackColor = Color.Green;
                     }
                 }
             }
@@ -913,7 +678,7 @@ namespace Chess
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    if (row >= 2)
+                    if (newRow != 0)
                     {
                         if (Chess.box[newRow - 1, column].Text == "")
                         {
@@ -941,7 +706,7 @@ namespace Chess
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    if (row <= 5)
+                    if (newRow != 7)
                     {
                         if (Chess.box[row + 1, column].Text == "")
                         {
