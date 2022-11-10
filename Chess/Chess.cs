@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -188,15 +189,14 @@ namespace Chess
                 if (Chess.box[oldRow, oldColumn].ForeColor == Color.White)
                 {
                     Chess.box[row, column].ForeColor = Color.White;
-                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
                 else
                 {
                     Chess.box[row, column].ForeColor = Color.Black;
-                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
 
                 clearPossibleMoves();
+                makeMoveVisible(oldRow, oldColumn, row, column);
 
                 buttonSelected = false;
             }
@@ -237,6 +237,23 @@ namespace Chess
                         break;
                 }
             }
+        }
+
+        private static void makeMoveVisible(int oldRow, int oldColumn, int row, int column)
+        {
+            for (int r = 0; r < 8; r++)
+            {
+                for (int c = 0; c < 8; c++)
+                {
+                    if (Chess.box[r, c].BackColor == Color.Orange)
+                    {
+                        Chess.box[r, c].BackColor = Color.Gray;
+                    }
+                }
+            }
+
+            Chess.box[oldRow, oldColumn].BackColor = Color.Orange;
+            Chess.box[row, column].BackColor = Color.Orange;
         }
 
         /// <summary>
@@ -778,7 +795,7 @@ namespace Chess
             {
                 for (int c = 0; c < Chess.boxes; c++)
                 {
-                    if (Chess.box[r, c].BackColor == Color.Green)
+                    if (Chess.box[r, c].BackColor != Color.Gray)
                     {
                         Chess.box[r, c].BackColor = Color.Gray;
                     }

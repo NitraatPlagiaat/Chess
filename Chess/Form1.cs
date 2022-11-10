@@ -96,6 +96,12 @@ namespace Chess
         /// <summary>
         /// Declare the oponent check
         /// </summary>
+        /// <algo>
+        /// Loop over the rows and columns
+        /// if the forecolor of the box is not equal to the color in Functions.color
+        /// AND if the text of the box is K
+        /// then make the box it's backcolor red.
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnCheck_Click(object sender, EventArgs e)
