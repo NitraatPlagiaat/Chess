@@ -189,10 +189,12 @@ namespace Chess
                 if (Chess.box[oldRow, oldColumn].ForeColor == Color.White)
                 {
                     Chess.box[row, column].ForeColor = Color.White;
+                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
                 else
                 {
                     Chess.box[row, column].ForeColor = Color.Black;
+                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
 
                 clearPossibleMoves();
