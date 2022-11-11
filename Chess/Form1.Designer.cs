@@ -49,7 +49,9 @@ namespace Chess
             this.gamepiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timeSetNumericInput = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timeSetNumericInput)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTimeStop
@@ -67,18 +69,18 @@ namespace Chess
             this.lblBlackMin.AutoSize = true;
             this.lblBlackMin.Location = new System.Drawing.Point(508, 203);
             this.lblBlackMin.Name = "lblBlackMin";
-            this.lblBlackMin.Size = new System.Drawing.Size(19, 13);
+            this.lblBlackMin.Size = new System.Drawing.Size(13, 13);
             this.lblBlackMin.TabIndex = 1;
-            this.lblBlackMin.Text = "10";
+            this.lblBlackMin.Text = "5";
             // 
             // lblWhiteMin
             // 
             this.lblWhiteMin.AutoSize = true;
             this.lblWhiteMin.Location = new System.Drawing.Point(508, 300);
             this.lblWhiteMin.Name = "lblWhiteMin";
-            this.lblWhiteMin.Size = new System.Drawing.Size(19, 13);
+            this.lblWhiteMin.Size = new System.Drawing.Size(13, 13);
             this.lblWhiteMin.TabIndex = 2;
-            this.lblWhiteMin.Text = "10";
+            this.lblWhiteMin.Text = "5";
             // 
             // timer1
             // 
@@ -200,22 +202,50 @@ namespace Chess
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(138, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // timeSetNumericInput
+            // 
+            this.timeSetNumericInput.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.timeSetNumericInput.Location = new System.Drawing.Point(639, 247);
+            this.timeSetNumericInput.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.timeSetNumericInput.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.timeSetNumericInput.Name = "timeSetNumericInput";
+            this.timeSetNumericInput.Size = new System.Drawing.Size(75, 20);
+            this.timeSetNumericInput.TabIndex = 11;
+            this.timeSetNumericInput.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 505);
+            this.Controls.Add(this.timeSetNumericInput);
             this.Controls.Add(this.chessPanel);
             this.Controls.Add(this.lbWhite);
             this.Controls.Add(this.lbBlack);
@@ -233,6 +263,7 @@ namespace Chess
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timeSetNumericInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,6 +290,7 @@ namespace Chess
         private System.Windows.Forms.ToolStripMenuItem gamepiecesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.NumericUpDown timeSetNumericInput;
     }
 }
 

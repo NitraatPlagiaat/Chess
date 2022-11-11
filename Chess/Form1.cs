@@ -34,6 +34,8 @@ namespace Chess
         {
             if (gameStarted == false)
             {
+                lblWhiteMin.Text = timeSetNumericInput.Value.ToString();
+                lblBlackMin.Text = timeSetNumericInput.Value.ToString();
                 gameStarted = true;
                 whiteTurn = true;
                 Functions.enableBoxes();
