@@ -119,6 +119,16 @@ namespace Chess
         /// <summary>
         /// Clean the remaining playing objects used in the last game
         /// </summary>
+        /// <algo>
+        /// Loop over the rows between the range of 2 and 6:
+        /// Loop over the columns until 8:
+        /// 
+        /// if a box is not empty:
+        /// make the text of the box on r and c ""
+        /// make the forecolor of the box on r and c transparent
+        /// 
+        /// Disabel all boxes
+        /// </algo>
         internal static void cleanPlayingObjects()
         {
             for (int r = 2; r < 6; r++)
@@ -241,6 +251,21 @@ namespace Chess
             }
         }
 
+        /// <summary>
+        /// Make made moves visible each time a player moves a piece
+        /// </summary>
+        /// <algo>
+        /// Loop over the rows and columns:
+        /// if the backcolor of the box on row, column is orange,
+        /// make the backcolor of that box gray
+        /// 
+        /// Make the backcolor of the previous box orange
+        /// Make the backcolor of the occupied box orange
+        /// </algo>
+        /// <param name="oldRow"></param>
+        /// <param name="oldColumn"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
         private static void makeMoveVisible(int oldRow, int oldColumn, int row, int column)
         {
             for (int r = 0; r < 8; r++)
@@ -341,6 +366,20 @@ namespace Chess
         /// <summary>
         /// calculate the moves for the bischop
         /// </summary>
+        /// <algo>
+        /// The bischop can only move diagonaly
+        /// Check on each diagonal way if the text on the box is ""
+        /// if so, make the backcolor green,
+        /// and add or subtract on newRow or newColumn. Depending on the direction
+        /// 
+        /// else:
+        /// if the forecolor of the next box is not the same as the forecolor of the playing player
+        /// Make the backcolor of the next box green and break the loop.
+        /// 
+        /// reset newRow and newColumn to the row and column of the game piece selected
+        /// 
+        /// do this for all directions
+        /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
         private static void calcMovesBischop(int row, int column, Color foreColor)
@@ -755,9 +794,13 @@ namespace Chess
         /// Disable every box which is not green if the bool parameter is false.
         /// </summary>
         /// <algo>
-        /// loop over each row
-        /// loop over each column
-        /// if the backcolor of the current box it's color is not green
+        /// loop over each row:
+        /// loop over each column:
+        /// if fullyDisable is true:
+        /// disable the box on r and c
+        /// 
+        /// else:
+        /// if the backcolor of the current box it's color is not green:
         /// disable the current box
         /// </algo>
         public static void disableBoxes(bool fullyDisable)
@@ -789,7 +832,11 @@ namespace Chess
         /// loop over each column
         /// if the current box it's color is equal to green,
         /// make the color of the current box gray
-        /// else, enable the current box
+        /// 
+        /// else:
+        /// 
+        /// if cleanup is false:
+        /// enable the box on r and c
         /// </algo>
         public static void clearMoveIndicators(bool cleanup)
         {

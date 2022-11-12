@@ -20,6 +20,11 @@ namespace Chess
         private static bool whiteTurn = false;
         private static bool gamePaused = false;
 
+        /// <summary>
+        /// Load the interface and playing objects
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             Chess.makeInterface(chessPanel);
@@ -32,6 +37,26 @@ namespace Chess
         /// <summary>
         /// Start the timer and switch players timers
         /// </summary>
+        /// <algo>
+        /// if the game has not been started:
+        /// get the value from timeSetNumericInput and put it in the timers
+        /// of the white and black players
+        /// also set their amount of seconds at 00
+        /// enable toolstrip items end current game and pause/resume
+        /// start the game
+        /// make white begin first
+        /// enable the boxes
+        /// start the timer
+        /// 
+        /// else:
+        /// if it is not white's turn
+        /// get the moves from functions.move array and put it in black's move history list
+        /// make whiteTurn true
+        /// 
+        /// else:
+        /// get the moves from functions.move array and put it in white's move history list
+        /// make whiteTurn false
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnTimeStop_Click(object sender, EventArgs e)
@@ -67,8 +92,18 @@ namespace Chess
         }
 
         /// <summary>
-        /// count down to 0
+        /// count down to 0 depending on whose turn it is
         /// </summary>
+        /// <algo>
+        /// if it is white's turn:
+        /// count down with each second
+        /// if the seconds hit 00
+        /// do a decrement on the minutes and set seconds back to 60
+        /// show the seconds and minutes left to the user
+        /// 
+        /// if it is black's turn:
+        /// do the same but for black
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
@@ -131,6 +166,10 @@ namespace Chess
         /// <summary>
         /// Declare the oponent checkmate
         /// </summary>
+        /// <algo>
+        /// Disable all boxes
+        /// stop the timer
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnCheckmate_Click(object sender, EventArgs e)
@@ -142,6 +181,14 @@ namespace Chess
         /// <summary>
         /// Start a new game
         /// </summary>
+        /// <algo>
+        /// Load the playing objects
+        /// clean up moved playing objects
+        /// clear all indicators of made moves and possible moves
+        /// clear move history of white
+        /// clear move history of black
+        /// set gameStarted to false
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void menuNewGame_Click(object sender, EventArgs e)
@@ -157,6 +204,15 @@ namespace Chess
         /// <summary>
         /// End the game
         /// </summary>
+        /// <algo>
+        /// Disable all boxes
+        /// Stop the timer
+        /// 
+        /// from the toolstrip menu:
+        /// enable new game button
+        /// disable pause/resume button
+        /// disable end current game button
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void endCurrentGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -168,11 +224,21 @@ namespace Chess
             endCurrentGameToolStripMenuItem.Enabled = false;
         }
 
+        /// <summary>
+        /// Show a message about which letter which gamepiece is
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gamepiecesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("p = pawn \n\rr = rook \n\rk = knight \n\rb = bischop \n\rQ = queen \n\rK = king");
         }
 
+        /// <summary>
+        /// Show a message about how to use the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Use the 'Time' button to start the game if not started and press it during the game after every move you make.\n\r" +
@@ -180,6 +246,11 @@ namespace Chess
                 "If you made your oponent checkmate, press the 'Checkmate' button");
         }
 
+        /// <summary>
+        /// Show a message about the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Chess ALPHA V2\n\r" +
