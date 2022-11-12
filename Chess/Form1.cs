@@ -18,11 +18,15 @@ namespace Chess
         }
         private static bool gameStarted = false;
         private static bool whiteTurn = false;
+        private static bool gamePaused = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Chess.makeInterface(chessPanel);
             Chess.loadPlayingObjects();
+            menuNewGame.Enabled = false;
+            endCurrentGameToolStripMenuItem.Enabled = false;
+            pauseResumeToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -35,7 +39,11 @@ namespace Chess
             if (gameStarted == false)
             {
                 lblWhiteMin.Text = timeSetNumericInput.Value.ToString();
+                lblWhiteSec.Text = "00";
                 lblBlackMin.Text = timeSetNumericInput.Value.ToString();
+                lblBlackSec.Text = "00";
+                endCurrentGameToolStripMenuItem.Enabled = true;
+                pauseResumeToolStripMenuItem.Enabled = true;
                 gameStarted = true;
                 whiteTurn = true;
                 Functions.enableBoxes();
@@ -140,6 +148,10 @@ namespace Chess
         {
             Chess.loadPlayingObjects();
             Chess.cleanPlayingObjects();
+            Functions.clearMoveIndicators(true);
+            lbWhite.Items.Clear();
+            lbBlack.Items.Clear();
+            gameStarted = false;
         }
 
         /// <summary>
@@ -151,6 +163,9 @@ namespace Chess
         {
             Functions.disableBoxes(true);
             timer1.Stop();
+            menuNewGame.Enabled = true;
+            pauseResumeToolStripMenuItem.Enabled = false;
+            endCurrentGameToolStripMenuItem.Enabled = false;
         }
 
         private void gamepiecesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -169,6 +184,27 @@ namespace Chess
         {
             MessageBox.Show("Chess ALPHA V2\n\r" +
                 "Developed by Yirnick van Dijk");
+        }
+
+        /// <summary>
+        /// Pause or resume the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pauseResumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (gamePaused == false)
+            {
+                Functions.disableBoxes(true);
+                timer1.Stop();
+                gamePaused = true;
+            }
+            else
+            {
+                Functions.enableBoxes();
+                timer1.Start();
+                gamePaused = false;
+            }
         }
     }
 }

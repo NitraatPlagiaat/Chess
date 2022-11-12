@@ -50,6 +50,7 @@ namespace Chess
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeSetNumericInput = new System.Windows.Forms.NumericUpDown();
+            this.pauseResumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeSetNumericInput)).BeginInit();
             this.SuspendLayout();
@@ -163,7 +164,8 @@ namespace Chess
             // 
             this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuNewGame,
-            this.endCurrentGameToolStripMenuItem});
+            this.endCurrentGameToolStripMenuItem,
+            this.pauseResumeToolStripMenuItem});
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.gameToolStripMenuItem.Text = "Game";
@@ -171,14 +173,14 @@ namespace Chess
             // menuNewGame
             // 
             this.menuNewGame.Name = "menuNewGame";
-            this.menuNewGame.Size = new System.Drawing.Size(168, 22);
-            this.menuNewGame.Text = "New game";
+            this.menuNewGame.Size = new System.Drawing.Size(180, 22);
+            this.menuNewGame.Text = "Prepare new game";
             this.menuNewGame.Click += new System.EventHandler(this.menuNewGame_Click);
             // 
             // endCurrentGameToolStripMenuItem
             // 
             this.endCurrentGameToolStripMenuItem.Name = "endCurrentGameToolStripMenuItem";
-            this.endCurrentGameToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.endCurrentGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.endCurrentGameToolStripMenuItem.Text = "End current game";
             this.endCurrentGameToolStripMenuItem.Click += new System.EventHandler(this.endCurrentGameToolStripMenuItem_Click);
             // 
@@ -240,6 +242,13 @@ namespace Chess
             0,
             0});
             // 
+            // pauseResumeToolStripMenuItem
+            // 
+            this.pauseResumeToolStripMenuItem.Name = "pauseResumeToolStripMenuItem";
+            this.pauseResumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pauseResumeToolStripMenuItem.Text = "Pause/Resume";
+            this.pauseResumeToolStripMenuItem.Click += new System.EventHandler(this.pauseResumeToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -259,7 +268,7 @@ namespace Chess
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Chess (ALPHA V2)";
+            this.Text = "Chess (BETA V1)";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -291,6 +300,7 @@ namespace Chess
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.NumericUpDown timeSetNumericInput;
+        private System.Windows.Forms.ToolStripMenuItem pauseResumeToolStripMenuItem;
     }
 }
 

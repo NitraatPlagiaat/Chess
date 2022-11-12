@@ -197,7 +197,7 @@ namespace Chess
                     Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
                 }
 
-                clearPossibleMoves();
+                clearMoveIndicators(false);
                 makeMoveVisible(oldRow, oldColumn, row, column);
 
                 buttonSelected = false;
@@ -791,7 +791,7 @@ namespace Chess
         /// make the color of the current box gray
         /// else, enable the current box
         /// </algo>
-        private static void clearPossibleMoves()
+        public static void clearMoveIndicators(bool cleanup)
         {
             for (int r = 0; r < Chess.boxes; r++)
             {
@@ -803,7 +803,10 @@ namespace Chess
                     }
                     else
                     {
-                        Chess.box[r, c].Enabled = true;
+                        if (cleanup == false)
+                        {
+                            Chess.box[r, c].Enabled = true;
+                        }
                     }
                 }
             }
