@@ -76,15 +76,16 @@ namespace Chess
             }
             else
             {
+                string gamePiece = Chess.box[Functions.move[2], Functions.move[3]].Text;
                 if (whiteTurn == false)
                 {
-                    string move = Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
+                    string move = gamePiece +": "+ Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
                     lbBlack.Items.Add(move);
                     whiteTurn = true;
                 }
                 else
                 {
-                    string move = Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
+                    string move = gamePiece + ": " + Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
                     lbWhite.Items.Add(move);
                     whiteTurn = false;
                 }

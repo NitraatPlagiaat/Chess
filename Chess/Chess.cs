@@ -815,7 +815,7 @@ namespace Chess
                     }
                     else
                     {
-                        if (Chess.box[r, c].BackColor != Color.Green)
+                        if (Chess.box[r, c].BackColor != Color.Green && Chess.box[r, c].BackColor != Color.Orange)
                         {
                             Chess.box[r, c].Enabled = false;
                         }
