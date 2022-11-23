@@ -254,13 +254,22 @@ namespace Chess
         /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chess ALPHA V2\n\r" +
+            MessageBox.Show("Chess BETA V1\n\r" +
                 "Developed by Yirnick van Dijk");
         }
 
         /// <summary>
         /// Pause or resume the game
         /// </summary>
+        /// <algo>
+        /// if the game is not paused already,
+        /// pause the game by disabling the boxes,
+        /// stop the timer and let the program know the game is paused
+        /// 
+        /// else,
+        /// Enable the boxes,
+        /// start the timer and let the program know the game is resumed
+        /// </algo>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void pauseResumeToolStripMenuItem_Click(object sender, EventArgs e)

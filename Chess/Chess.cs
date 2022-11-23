@@ -464,109 +464,62 @@ namespace Chess
         }
 
         /// <summary>
-        /// Calculate the possible moves for the knight
+        /// Calculate the possible moves for the knight based on its row and column position
         /// </summary>
         /// <algo>
-        /// check if column is greater or equal to 1 and row is greater or equal to 2
-        /// if the selected piece forecolor is white ->
-        /// check if the box row - 2, column - 1 isn't white
-        /// if so make the backcolor of box row - 2, column - 1 green
-        /// -> else check if box row - 2, column - 1 forecolor isn't black
-        /// if so make the backcolor of box row - 2, column - 1 green
+        /// Set borders by checking if the knight hasn't been out of bounds for coloring a 
+        /// box. This can be done by checking where the knight is on the board.
         /// 
-        /// if column is smaller or equal to 6,
-        /// if the selected piece forecolor is white ->
-        /// check if the box row - 2, column + 1 isn't white
-        /// if so make the backcolor of box row - 2, column + 1 green
-        /// -> else check if box row - 2, column + 1 forecolor isn't black
-        /// if so make the backcolor of box row - 2, column + 1 green
+        /// A specific box can be colored green 
+        /// if the knight has not passed the border of the row and column
+        /// if the knight hasn't, make that specific box green
         /// 
-        /// check if column is greater or equal to 2 and row is greater or equal to 1
-        /// if the selected piece forecolor is white ->
-        /// check if the box row - 1, column - 2 isn't white
-        /// if so make the backcolor of box row - 1, column - 2 green
-        /// -> else check if box row - 1, column - 2 forecolor isn't black
-        /// if so make the backcolor of box row - 1, column - 2 green
-        /// 
-        /// if column is smaller or equal to 5,
-        /// if the selected piece forecolor is white ->
-        /// check if the box row - 1, column + 2 isn't white
-        /// if so make the backcolor of box row - 1, column + 2 green
-        /// -> else check if box row - 1, column + 2 forecolor isn't black
-        /// if so make the backcolor of box row - 1, column + 2 green
-        /// 
-        /// check if column is greater or equal to 2 and row is smaller or equal to 6
-        /// if the selected piece forecolor is white ->
-        /// check if the box row + 1, column - 2 isn't white
-        /// if so make the backcolor of box row + 1, column - 2 green
-        /// -> else check if box row + 1, column - 2 forecolor isn't black
-        /// if so make the backcolor of box row + 1, column - 2 green
-        /// 
-        /// if column is smaller or equal to 5,
-        /// if the selected piece forecolor is white ->
-        /// check if the box row + 1, column + 2 isn't white
-        /// if so make the backcolor of box row + 1, column + 2 green
-        /// -> else check if box row + 1, column + 2 forecolor isn't black
-        /// if so make the backcolor of box row + 1, column + 2 green
-        /// 
-        /// check if column is greater or equal to 1 and row is smaller or equal to 5
-        /// if the selected piece forecolor is white ->
-        /// check if the box row + 2, column - 1 isn't white
-        /// if so make the backcolor of box row + 2, column - 1 green
-        /// -> else check if box row + 2, column - 1 forecolor isn't black
-        /// if so make the backcolor of box row + 2, column - 1 green
-        /// 
-        /// if column is smaller or equal to 6,
-        /// if the selected piece forecolor is white ->
-        /// check if the box row + 2, column + 1 isn't white
-        /// if so make the backcolor of box row + 2, column + 1 green
-        /// -> else check if box row + 2, column + 1 forecolor isn't black
-        /// if so make the backcolor of box row + 2, column + 1 green
+        /// Do the same for each box.
         /// </algo>
         /// <param name="row"></param>
         /// <param name="column"></param>
         private static void calcMovesKnight(int row, int column, Color foreColor)
         {
-            if (column >= 1 && row >= 2)
-            {
-                if (Chess.box[row - 2, column - 1].ForeColor != foreColor)
-                {
-                    Chess.box[row - 2, column - 1].BackColor = Color.Green;
-                }
-                if (column <= 6)
-                {
-                    if (Chess.box[row - 2, column + 1].ForeColor != foreColor)
-                    {
-                        Chess.box[row - 2, column + 1].BackColor = Color.Green;
-                    }
-                }
-            }
             if (column >= 2 && row >= 1)
             {
                 if (Chess.box[row - 1, column - 2].ForeColor != foreColor)
                 {
                     Chess.box[row - 1, column - 2].BackColor = Color.Green;
                 }
-                if (column <= 5)
+            }
+            if (column >= 1 && row >= 2)
+            {
+                if (Chess.box[row - 2, column - 1].ForeColor != foreColor)
                 {
-                    if (Chess.box[row - 1, column + 2].ForeColor != foreColor)
-                    {
-                        Chess.box[row - 1, column + 2].BackColor = Color.Green;
-                    }
+                    Chess.box[row - 2, column - 1].BackColor = Color.Green;
                 }
             }
-            if (column >= 2 && row <= 6)
+            if (column <= 6 && row >= 2)
             {
-                if (Chess.box[row + 1, column - 2].ForeColor != foreColor)
+                if (Chess.box[row - 2, column + 1].ForeColor != foreColor)
                 {
-                    Chess.box[row + 1, column - 2].BackColor = Color.Green;
+                    Chess.box[row - 2, column + 1].BackColor = Color.Green;
                 }
-                if (column <= 5)
+            }
+            if (column <= 5 && row >= 1)
+            {
+                if (Chess.box[row - 1, column + 2].ForeColor != foreColor)
                 {
-                    if (Chess.box[row + 1, column + 2].ForeColor != foreColor)
-                    {
-                        Chess.box[row + 1, column + 2].BackColor = Color.Green;
-                    }
+                    Chess.box[row - 1, column + 2].BackColor = Color.Green;
+                }
+            }
+            if (column <= 5 && row <= 6)
+            {
+                if (Chess.box[row + 1, column + 2].ForeColor != foreColor)
+                {
+                    Chess.box[row + 1, column + 2].BackColor = Color.Green;
+                }
+            }
+            if (column <= 6 && row <= 5)
+            {
+                if (Chess.box[row + 2, column + 1].ForeColor != foreColor)
+                {
+                    Chess.box[row + 2, column + 1].BackColor = Color.Green;
                 }
             }
             if (column >= 1 && row <= 5)
@@ -575,12 +528,12 @@ namespace Chess
                 {
                     Chess.box[row + 2, column - 1].BackColor = Color.Green;
                 }
-                if (column <= 6)
+            }
+            if (column >= 2 && row <= 6)
+            {
+                if (Chess.box[row + 1, column - 2].ForeColor != foreColor)
                 {
-                    if (Chess.box[row + 2, column + 1].ForeColor != foreColor)
-                    {
-                        Chess.box[row + 2, column + 1].BackColor = Color.Green;
-                    }
+                    Chess.box[row + 1, column - 2].BackColor = Color.Green;
                 }
             }
         }
