@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Common;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Chess
@@ -68,6 +69,7 @@ namespace Chess
                     box[r, c].Location = new Point(c * w / boxes, r * h / boxes);
                     box[r, c].Click += Functions.box_click;
                     box[r, c].BackColor = Color.Gray;
+                    box[r, c].ForeColor = Color.Transparent;
                     box[r, c].Row = r;
                     box[r, c].Column = c;
                     box[r, c].Enabled = false;
@@ -208,7 +210,7 @@ namespace Chess
                 }
 
                 clearMoveIndicators(false);
-                makeMoveVisible(oldRow, oldColumn, row, column);
+                makeMadeMoveVisible(oldRow, oldColumn, row, column);
 
                 buttonSelected = false;
             }
@@ -221,33 +223,26 @@ namespace Chess
                 switch (Chess.box[row, column].Text)
                 {
                     case "p":
-                        calcMovesPawn(row, column);
-                        disableBoxes(false);
+                        calcMovesPawn(row, column, color);
                         break;
                     case "r":
-                        calcMovesTower(row, column, Chess.box[row, column].ForeColor);
-                        disableBoxes(false);
+                        calcMovesTower(row, column, color);
                         break;
                     case "k":
-                        calcMovesKnight(row, column, Chess.box[row, column].ForeColor);
-                        disableBoxes(false);
+                        calcMovesKnight(row, column, color);
                         break;
                     case "b":
-                        calcMovesBischop(row, column, Chess.box[row, column].ForeColor);
-                        disableBoxes(false);
+                        calcMovesBischop(row, column, color);
                         break;
                     case "Q":
-                        calcMovesBischop(row, column, Chess.box[row, column].ForeColor);
-                        calcMovesTower(row, column, Chess.box[row, column].ForeColor);
-                        disableBoxes(false);
+                        calcMovesBischop(row, column, color);
+                        calcMovesTower(row, column, color);
                         break;
                     case "K":
-                        calcMovesKing(row, column, Chess.box[row, column].ForeColor);
-                        disableBoxes(false);
-                        break;
-                    default:
+                        calcMovesKing(row, column, color);
                         break;
                 }
+                disableBoxes(false);
             }
         }
 
@@ -266,7 +261,7 @@ namespace Chess
         /// <param name="oldColumn"></param>
         /// <param name="row"></param>
         /// <param name="column"></param>
-        private static void makeMoveVisible(int oldRow, int oldColumn, int row, int column)
+        private static void makeMadeMoveVisible(int oldRow, int oldColumn, int row, int column)
         {
             for (int r = 0; r < 8; r++)
             {
@@ -482,59 +477,35 @@ namespace Chess
         {
             if (column >= 2 && row >= 1)
             {
-                if (Chess.box[row - 1, column - 2].ForeColor != foreColor)
-                {
-                    Chess.box[row - 1, column - 2].BackColor = Color.Green;
-                }
+                checkColor(row - 1, column - 2, foreColor);
             }
             if (column >= 1 && row >= 2)
             {
-                if (Chess.box[row - 2, column - 1].ForeColor != foreColor)
-                {
-                    Chess.box[row - 2, column - 1].BackColor = Color.Green;
-                }
+                checkColor(row - 2, column - 1, foreColor);
             }
             if (column <= 6 && row >= 2)
             {
-                if (Chess.box[row - 2, column + 1].ForeColor != foreColor)
-                {
-                    Chess.box[row - 2, column + 1].BackColor = Color.Green;
-                }
+                checkColor(row - 2, column + 1, foreColor);
             }
             if (column <= 5 && row >= 1)
             {
-                if (Chess.box[row - 1, column + 2].ForeColor != foreColor)
-                {
-                    Chess.box[row - 1, column + 2].BackColor = Color.Green;
-                }
+                checkColor(row - 1, column + 2, foreColor);
             }
             if (column <= 5 && row <= 6)
             {
-                if (Chess.box[row + 1, column + 2].ForeColor != foreColor)
-                {
-                    Chess.box[row + 1, column + 2].BackColor = Color.Green;
-                }
+                checkColor(row + 1, column + 2, foreColor);
             }
             if (column <= 6 && row <= 5)
             {
-                if (Chess.box[row + 2, column + 1].ForeColor != foreColor)
-                {
-                    Chess.box[row + 2, column + 1].BackColor = Color.Green;
-                }
+                checkColor(row + 2, column + 1, foreColor);
             }
             if (column >= 1 && row <= 5)
             {
-                if (Chess.box[row + 2, column - 1].ForeColor != foreColor)
-                {
-                    Chess.box[row + 2, column - 1].BackColor = Color.Green;
-                }
+                checkColor(row + 2, column - 1, foreColor);
             }
             if (column >= 2 && row <= 6)
             {
-                if (Chess.box[row + 1, column - 2].ForeColor != foreColor)
-                {
-                    Chess.box[row + 1, column - 2].BackColor = Color.Green;
-                }
+                checkColor(row + 1, column - 2, foreColor);
             }
         }
 
@@ -594,69 +565,29 @@ namespace Chess
             int newColumn = column;
             while (newRow != 0)
             {
-                if (Chess.box[newRow - 1, column].Text == "")
-                {
-                    newRow = newRow - 1;
-                    Chess.box[newRow, column].BackColor = Color.Green;
-                }
-                else
-                {
-                    if (Chess.box[newRow - 1, column].ForeColor != foreColor)
-                    {
-                        Chess.box[newRow - 1, column].BackColor = Color.Green;
-                    }
-                    break;
-                }
+                newRow = checkText(newRow - 1, column, true);
+                checkColor(newRow, column, foreColor);
+                if (blockage(newRow, column)) { break; }
             }
             newRow = row;
             while (newRow != 7)
             {
-                if (Chess.box[newRow + 1, column].Text == "")
-                {
-                    newRow = newRow + 1;
-                    Chess.box[newRow, column].BackColor = Color.Green;
-                }
-                else
-                {
-                    if (Chess.box[newRow + 1, column].ForeColor != foreColor)
-                    {
-                        Chess.box[newRow + 1, column].BackColor = Color.Green;
-                    }
-                    break;
-                }
+                newRow = checkText(newRow + 1, column, true);
+                checkColor(newRow, column, foreColor);
+                if (blockage(newRow, column)) { break; }
             }
             while (newColumn != 7)
             {
-                if (Chess.box[row, newColumn + 1].Text == "")
-                {
-                    newColumn = newColumn + 1;
-                    Chess.box[row, newColumn].BackColor = Color.Green;
-                }
-                else
-                {
-                    if (Chess.box[row, newColumn + 1].ForeColor != foreColor)
-                    {
-                        Chess.box[newRow, newColumn + 1].BackColor = Color.Green;
-                    }
-                    break;
-                }
+                newColumn = checkText(row, newColumn + 1, false);
+                checkColor(row, newColumn, foreColor);
+                if (blockage(row, newColumn)) { break; }
             }
             newColumn = column;
             while (newColumn != 0)
             {
-                if (Chess.box[row, newColumn - 1].Text == "")
-                {
-                    newColumn = newColumn - 1;
-                    Chess.box[row, newColumn].BackColor = Color.Green;
-                }
-                else
-                {
-                    if (Chess.box[row, newColumn - 1].ForeColor != foreColor)
-                    {
-                        Chess.box[row, newColumn - 1].BackColor = Color.Green;
-                    }
-                    break;
-                }
+                newColumn = checkText(row, newColumn - 1, false);
+                checkColor(row, newColumn, foreColor);
+                if (blockage(row, newColumn)) { break; }
             }
         }
 
@@ -682,7 +613,7 @@ namespace Chess
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <param name="foreColor"></param>
-        private static void calcMovesPawn(int row, int column)
+        private static void calcMovesPawn(int row, int column, Color foreColor)
         {
             int newRow = row;
             if (Chess.box[row, column].ForeColor == Color.White)
@@ -691,26 +622,16 @@ namespace Chess
                 {
                     if (newRow != 0)
                     {
-                        if (Chess.box[newRow - 1, column].Text == "")
-                        {
-                            newRow = newRow - 1;
-                            Chess.box[newRow, column].BackColor = Color.Green;
-                        }
+                        newRow = checkText(newRow - 1, column, true);
                     }
                 }
                 if (column != 0 && row != 0)
                 {
-                    if (Chess.box[row - 1, column - 1].ForeColor == Color.Black)
-                    {
-                        Chess.box[row - 1, column - 1].BackColor = Color.Green;
-                    }
+                    checkColor(row - 1, column - 1, foreColor);
                 }
                 if (column != 7 && row != 0)
                 {
-                    if (Chess.box[row - 1, column + 1].ForeColor == Color.Black)
-                    {
-                        Chess.box[row - 1, column + 1].BackColor = Color.Green;
-                    }
+                    checkColor(row - 1, column + 1, foreColor);
                 }
             }
             else
@@ -719,27 +640,100 @@ namespace Chess
                 {
                     if (newRow != 7)
                     {
-                        if (Chess.box[row + 1, column].Text == "")
-                        {
-                            newRow = newRow + 1;
-                            Chess.box[newRow, column].BackColor = Color.Green;
-                        }
+                        newRow = checkText(newRow + 1, column, true);
                     }
                 }
                 if (column != 7 && row != 7)
                 {
-                    if (Chess.box[row + 1, column + 1].ForeColor == Color.White)
-                    {
-                        Chess.box[row + 1, column + 1].BackColor = Color.Green;
-                    }
+                    checkColor(row + 1, column + 1, foreColor);
                 }
                 if (column != 0 && row != 7)
                 {
-                    if (Chess.box[row + 1, column - 1].ForeColor == Color.White)
+                    checkColor(row + 1, column - 1, foreColor);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if box has text and forecolor is not the same as current forecolor
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private static bool blockage(int row, int column)
+        {
+            if (Chess.box[row, column].Text != "")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Make a box green based on the rowm, column and forecolor.
+        /// </summary>
+        /// <algo>
+        /// If the forecolor of the box is equal to forecolor,
+        /// make the backcolor of that box green
+        /// </algo>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <param name="foreColor"></param>
+        private static void checkColor(int row, int column, Color foreColor)
+        {
+            if (foreColor == Color.White)
+            {
+                if (Chess.box[row, column].ForeColor == Color.Black)
+                {
+                    Chess.box[row, column].BackColor = Color.Green;
+                }
+                else
+                {
+                    if (Chess.box[move[0], move[1]].Text != "p" && Chess.box[row, column].ForeColor != foreColor)
                     {
-                        Chess.box[row + 1, column - 1].BackColor = Color.Green;
+                        Chess.box[row, column].BackColor = Color.Green;
                     }
                 }
+            }
+            else
+            {
+                if (Chess.box[row, column].ForeColor == Color.White)
+                {
+                    Chess.box[row, column].BackColor = Color.Green;
+                }
+                else
+                {
+                    if (Chess.box[move[0], move[1]].Text != "p" && Chess.box[row, column].ForeColor != foreColor)
+                    {
+                        Chess.box[row, column].BackColor = Color.Green;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Make a box green based on it's row, column and if they contain text.
+        /// </summary>
+        /// <algo>
+        /// If the text on the box is "",
+        /// make the backcolor of that row green.
+        /// And return row.
+        /// </algo>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        private static int checkText(int row, int column, bool returnRow)
+        {
+            if (Chess.box[row, column].Text == "")
+            {
+                Chess.box[row, column].BackColor = Color.Green;
+            }
+            if (returnRow)
+            {
+                return row;
+            }
+            else
+            {
+                return column;
             }
         }
 
