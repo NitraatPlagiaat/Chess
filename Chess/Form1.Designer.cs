@@ -45,12 +45,12 @@ namespace Chess
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNewGame = new System.Windows.Forms.ToolStripMenuItem();
             this.endCurrentGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseResumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gamepiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeSetNumericInput = new System.Windows.Forms.NumericUpDown();
-            this.pauseResumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeSetNumericInput)).BeginInit();
             this.SuspendLayout();
@@ -173,16 +173,23 @@ namespace Chess
             // menuNewGame
             // 
             this.menuNewGame.Name = "menuNewGame";
-            this.menuNewGame.Size = new System.Drawing.Size(180, 22);
+            this.menuNewGame.Size = new System.Drawing.Size(172, 22);
             this.menuNewGame.Text = "Prepare new game";
             this.menuNewGame.Click += new System.EventHandler(this.menuNewGame_Click);
             // 
             // endCurrentGameToolStripMenuItem
             // 
             this.endCurrentGameToolStripMenuItem.Name = "endCurrentGameToolStripMenuItem";
-            this.endCurrentGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.endCurrentGameToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.endCurrentGameToolStripMenuItem.Text = "End current game";
             this.endCurrentGameToolStripMenuItem.Click += new System.EventHandler(this.endCurrentGameToolStripMenuItem_Click);
+            // 
+            // pauseResumeToolStripMenuItem
+            // 
+            this.pauseResumeToolStripMenuItem.Name = "pauseResumeToolStripMenuItem";
+            this.pauseResumeToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.pauseResumeToolStripMenuItem.Text = "Pause/Resume";
+            this.pauseResumeToolStripMenuItem.Click += new System.EventHandler(this.pauseResumeToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -242,13 +249,6 @@ namespace Chess
             0,
             0});
             // 
-            // pauseResumeToolStripMenuItem
-            // 
-            this.pauseResumeToolStripMenuItem.Name = "pauseResumeToolStripMenuItem";
-            this.pauseResumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pauseResumeToolStripMenuItem.Text = "Pause/Resume";
-            this.pauseResumeToolStripMenuItem.Click += new System.EventHandler(this.pauseResumeToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,7 +268,7 @@ namespace Chess
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Chess (BETA V1)";
+            this.Text = "Chess (BETA V1.1)";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

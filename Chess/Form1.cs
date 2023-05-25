@@ -19,6 +19,8 @@ namespace Chess
         private static bool gameStarted = false;
         private static bool whiteTurn = false;
         private static bool gamePaused = false;
+        private static int minutes = 0;
+        private static int seconds = 0;
 
         /// <summary>
         /// Load the interface and playing objects
@@ -63,10 +65,9 @@ namespace Chess
         {
             if (gameStarted == false)
             {
-                lblWhiteMin.Text = timeSetNumericInput.Value.ToString();
-                lblWhiteSec.Text = "00";
-                lblBlackMin.Text = timeSetNumericInput.Value.ToString();
-                lblBlackSec.Text = "00";
+                setGameTime(timeSetNumericInput.Value.ToString(), "00", true);
+                setGameTime(timeSetNumericInput.Value.ToString(), "00", false);
+                minutes = Convert.ToInt32(timeSetNumericInput.Value);
                 endCurrentGameToolStripMenuItem.Enabled = true;
                 pauseResumeToolStripMenuItem.Enabled = true;
                 gameStarted = true;
@@ -79,16 +80,45 @@ namespace Chess
                 string gamePiece = Chess.box[Functions.move[2], Functions.move[3]].Text;
                 if (whiteTurn == false)
                 {
+                    minutes = Int32.Parse(lblWhiteMin.Text);
+                    seconds = Int32.Parse(lblWhiteSec.Text);
                     string move = gamePiece +": "+ Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
                     lbBlack.Items.Add(move);
                     whiteTurn = true;
                 }
                 else
                 {
+                    minutes = Int32.Parse(lblBlackMin.Text);
+                    seconds = Int32.Parse(lblBlackSec.Text);
                     string move = gamePiece + ": " + Functions.move[0] + "," + Functions.move[1] + " => " + Functions.move[2] + "," + Functions.move[3];
                     lbWhite.Items.Add(move);
                     whiteTurn = false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// set the time minutes and seconds for one of the players or both
+        /// depending on the black or white integer
+        /// </summary>
+        /// <algo>
+        /// true = white
+        /// false = black
+        /// </algo>
+        /// <param name="offsetMin"></param>
+        /// <param name="offsetSec"></param>
+        /// <param name="blackOrWhite"></param>
+        private void setGameTime(string offsetMin, string offsetSec, bool blackOrWhite)
+        {
+            if (blackOrWhite)
+            {
+                lblWhiteMin.Text = offsetMin;
+                lblWhiteSec.Text = offsetSec;
+            }
+            else
+            {
+                lblBlackMin.Text = offsetMin;
+                lblBlackSec.Text = offsetSec;
             }
         }
 
@@ -109,33 +139,20 @@ namespace Chess
         /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (seconds == 0)
+            {
+                minutes--;
+                seconds = 60;
+            }
+            seconds--;
+
             if (whiteTurn == true)
             {
-                int min = Int32.Parse(lblWhiteMin.Text);
-                int sec = Int32.Parse(lblWhiteSec.Text);
-
-                if (sec == 0)
-                {
-                    min--;
-                    sec = 60;
-                }
-                sec--;
-                lblWhiteMin.Text = min.ToString();
-                lblWhiteSec.Text = sec.ToString();
+                setGameTime(minutes.ToString(), seconds.ToString(), true);
             }
             else
             {
-                int min = Int32.Parse(lblBlackMin.Text);
-                int sec = Int32.Parse(lblBlackSec.Text);
-
-                if (sec == 0)
-                {
-                    min--;
-                    sec = 60;
-                }
-                sec--;
-                lblBlackMin.Text = min.ToString();
-                lblBlackSec.Text = sec.ToString();
+                setGameTime(minutes.ToString(), seconds.ToString(), false);
             }
         }
 
@@ -254,7 +271,7 @@ namespace Chess
         /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chess BETA V1\n\r" +
+            MessageBox.Show("Chess BETA V1.1\n\r" +
                 "Developed by Yirnick van Dijk");
         }
 
