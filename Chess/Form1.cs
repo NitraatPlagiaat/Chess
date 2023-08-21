@@ -94,6 +94,29 @@ namespace Chess
                     lbWhite.Items.Add(move);
                     whiteTurn = false;
                 }
+
+                checkIfConquered();
+            }
+        }
+
+        /// <summary>
+        /// Check if a player conquered a piece of the opponent and
+        /// add it to it's list of conquered pieces
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void checkIfConquered()
+        {
+            if (ChessPieces.conquered == true)
+            {
+                if (ChessPieces.color == Color.Black)
+                {
+                    lbConqueredWhite.Items.Add(ChessPieces.chessPiece);
+                }
+                else
+                {
+                    lbConqueredBlack.Items.Add(ChessPieces.chessPiece);
+                }
+                ChessPieces.conquered = false;
             }
         }
 

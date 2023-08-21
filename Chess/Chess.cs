@@ -19,6 +19,10 @@ namespace Chess
             "k",
             "r"
         };
+
+        public static bool conquered = false;
+        public static string chessPiece;
+        public static Color color;
     }
 
     class ChessButton : Button
@@ -190,6 +194,8 @@ namespace Chess
 
             if (buttonSelected == true)
             {
+                isOpponent(row, column);
+
                 int oldRow = move[0];
                 int oldColumn = move[1];
                 move[2] = row;
@@ -243,6 +249,22 @@ namespace Chess
                         break;
                 }
                 disableBoxes(false);
+            }
+        }
+
+        /// <summary>
+        /// Check if gamepiece is the opponent to be conquered
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private static void isOpponent(int row, int column)
+        {
+            if (Chess.box[row, column].ForeColor != Color.Transparent && Chess.box[row, column].ForeColor != color)
+            {
+                ChessPieces.color = Chess.box[row, column].ForeColor;
+                ChessPieces.chessPiece = Chess.box[row, column].Text;
+                ChessPieces.conquered = true;
             }
         }
 
