@@ -51,6 +51,8 @@ namespace Chess
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeSetNumericInput = new System.Windows.Forms.NumericUpDown();
+            this.lbConqueredBlack = new System.Windows.Forms.ListBox();
+            this.lbConqueredWhite = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.timeSetNumericInput)).BeginInit();
             this.SuspendLayout();
@@ -156,7 +158,7 @@ namespace Chess
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(726, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(782, 24);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -249,11 +251,29 @@ namespace Chess
             0,
             0});
             // 
+            // lbConqueredBlack
+            // 
+            this.lbConqueredBlack.FormattingEnabled = true;
+            this.lbConqueredBlack.Location = new System.Drawing.Point(715, 27);
+            this.lbConqueredBlack.Name = "lbConqueredBlack";
+            this.lbConqueredBlack.Size = new System.Drawing.Size(48, 160);
+            this.lbConqueredBlack.TabIndex = 12;
+            // 
+            // lbConqueredWhite
+            // 
+            this.lbConqueredWhite.FormattingEnabled = true;
+            this.lbConqueredWhite.Location = new System.Drawing.Point(715, 331);
+            this.lbConqueredWhite.Name = "lbConqueredWhite";
+            this.lbConqueredWhite.Size = new System.Drawing.Size(48, 160);
+            this.lbConqueredWhite.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 505);
+            this.ClientSize = new System.Drawing.Size(782, 505);
+            this.Controls.Add(this.lbConqueredWhite);
+            this.Controls.Add(this.lbConqueredBlack);
             this.Controls.Add(this.timeSetNumericInput);
             this.Controls.Add(this.chessPanel);
             this.Controls.Add(this.lbWhite);
@@ -301,6 +321,8 @@ namespace Chess
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.NumericUpDown timeSetNumericInput;
         private System.Windows.Forms.ToolStripMenuItem pauseResumeToolStripMenuItem;
+        private System.Windows.Forms.ListBox lbConqueredBlack;
+        private System.Windows.Forms.ListBox lbConqueredWhite;
     }
 }
 
