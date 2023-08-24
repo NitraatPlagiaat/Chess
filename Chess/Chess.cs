@@ -157,6 +157,7 @@ namespace Chess
         public static bool buttonSelected = false;
         public static int[] move = new int[4];
         public static Color color = Color.Transparent;
+        public static bool specialMove = false;
 
         /// <summary>
         /// Calculate possible movements per chesspiece
@@ -201,22 +202,17 @@ namespace Chess
                 move[2] = row;
                 move[3] = column;
 
-                Chess.box[row, column].Text = Chess.box[oldRow, oldColumn].Text;
-                Chess.box[oldRow, oldColumn].Text = "";
-
-                if (Chess.box[oldRow, oldColumn].ForeColor == Color.White)
+                if (specialMove == false)
                 {
-                    Chess.box[row, column].ForeColor = Color.White;
-                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
+                    movePiece(row, column, oldRow, oldColumn);
+                    makeMadeMoveVisible(oldRow, oldColumn, row, column);
                 }
                 else
                 {
-                    Chess.box[row, column].ForeColor = Color.Black;
-                    Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
+                    specialMove = false;
                 }
 
                 clearMoveIndicators(false);
-                makeMadeMoveVisible(oldRow, oldColumn, row, column);
 
                 buttonSelected = false;
             }
@@ -233,6 +229,7 @@ namespace Chess
                         break;
                     case "r":
                         calcMovesTower(row, column, color);
+                        calcCastling(row, column);
                         break;
                     case "k":
                         calcMovesKnight(row, column, color);
@@ -246,6 +243,7 @@ namespace Chess
                         break;
                     case "K":
                         calcMovesKing(row, column, color);
+                        calcCastling(row, column);
                         break;
                 }
                 disableBoxes(false);
@@ -253,7 +251,71 @@ namespace Chess
         }
 
         /// <summary>
+        /// Move the piece from it's old row and old column
+        /// to the current row and current column
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private static void movePiece(int row, int column, int oldRow, int oldColumn)
+        {
+            Chess.box[row, column].Text = Chess.box[oldRow, oldColumn].Text;
+            Chess.box[oldRow, oldColumn].Text = "";
+
+            if (Chess.box[oldRow, oldColumn].ForeColor == Color.White)
+            {
+                Chess.box[row, column].ForeColor = Color.White;
+                Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
+            }
+            else
+            {
+                Chess.box[row, column].ForeColor = Color.Black;
+                Chess.box[oldRow, oldColumn].ForeColor = Color.Transparent;
+            }
+        }
+
+        /// <summary>
+        /// Check if it's possible to castle. If so, show it.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <param name="color"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private static void calcCastling(int row, int column)
+        {
+            bool rookSelected = false;
+
+            if (Chess.box[row, column].Text == "r")
+            {
+                column = column - 3;
+                rookSelected = true;
+            }
+
+            while (column < 7)
+            {
+                column++;
+                if (Chess.box[row, column].Text == "r")
+                {
+                    if (rookSelected == true)
+                    {
+                        Chess.box[row, column - 3].BackColor = Color.Green;
+                    }
+                    else
+                    {
+                        Chess.box[row, column].BackColor = Color.Green;
+                    }
+                }
+                else
+                {
+                    if (Chess.box[row, column].Text != "")
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Check if gamepiece is the opponent to be conquered
+        /// If it's not the opponent, make castling move
         /// </summary>
         /// <param name="row"></param>
         /// <param name="column"></param>
@@ -265,6 +327,45 @@ namespace Chess
                 ChessPieces.color = Chess.box[row, column].ForeColor;
                 ChessPieces.chessPiece = Chess.box[row, column].Text;
                 ChessPieces.conquered = true;
+            }
+            else
+            {
+                if (Chess.box[row, column].Text == "K" || Chess.box[row, column].Text == "r")
+                {
+                    castle();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Make the castle move in Chess
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private static void castle()
+        {
+            specialMove = true;
+            for (int r = 0; r < Chess.boxes; r++)
+            {
+                for (int c = 0; c < Chess.boxes; c++)
+                {
+                    if (Chess.box[r, c].Text == "K" && c == 4)
+                    {
+                        Chess.box[r, c].Text = "";
+                        Chess.box[r, c].ForeColor = Color.Transparent;
+                        Chess.box[r, c + 2].Text = "K";
+                        Chess.box[r, c + 2].ForeColor = color;
+                    }
+                    else
+                    {
+                        if (Chess.box[r, c].Text == "r" && c != 0)
+                        {
+                            Chess.box[r, c].Text = "";
+                            Chess.box[r, c].ForeColor = Color.Transparent;
+                            Chess.box[r, c - 2].Text = "r";
+                            Chess.box[r, c - 2].ForeColor = color;
+                        }
+                    }
+                }
             }
         }
 
@@ -753,12 +854,9 @@ namespace Chess
                     {
                         Chess.box[r, c].BackColor = Color.Gray;
                     }
-                    else
+                    if (cleanup == false)
                     {
-                        if (cleanup == false)
-                        {
-                            Chess.box[r, c].Enabled = true;
-                        }
+                        Chess.box[r, c].Enabled = true;
                     }
                 }
             }
