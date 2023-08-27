@@ -348,7 +348,7 @@ namespace Chess
             {
                 for (int c = 0; c < Chess.boxes; c++)
                 {
-                    if (Chess.box[r, c].Text == "K" && c == 4)
+                    if (Chess.box[r, c].Text == "K" && c == 4 && Chess.box[r, c].ForeColor == color)
                     {
                         Chess.box[r, c].Text = "";
                         Chess.box[r, c].ForeColor = Color.Transparent;
@@ -357,7 +357,7 @@ namespace Chess
                     }
                     else
                     {
-                        if (Chess.box[r, c].Text == "r" && c != 0)
+                        if (Chess.box[r, c].Text == "r" && c != 0 && Chess.box[r, c].ForeColor == color)
                         {
                             Chess.box[r, c].Text = "";
                             Chess.box[r, c].ForeColor = Color.Transparent;
